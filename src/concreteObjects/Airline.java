@@ -6,6 +6,6 @@ import java.util.HashSet;
 
 public class Airline {
     private String name; //strlen < 6, unique name
-    private HashSet flightList; //Can have 0-n members, initialized to have 0 flights
+    private HashSet<Flight> flightList = new HashSet<Flight>(); //Can have 0-n members, initialized to have 0 flights
 
 }

@@ -1,5 +1,8 @@
 package SystemManager;
 
+import java.util.HashSet;
+
+import concreteObjects.Airport;
 import flight.SeatClass;
 
 /*SystemManager: This class provides the interface (Façade) to the system.  That is, clients interact with the system by calling operations in the SystemManager.  The SystemManager is linked to all the airport and airline objects in the system.  When it is created, the SystemManager has no airport or airline objects linked to it.  To create airports and airlines, the createAirport() and createAirline() operations defined in this class must be invoked.  The class also contains operations for creating sections of flights (e.g., first class and business class sections), finding available flights between two airports, and booking a seat on a flight.  A printout of information on all the airports, airlines, flights, flight sections and seats is obtained by invoking displaySystemDetails().
@@ -20,14 +23,25 @@ displaySystemDetails(): Displays attribute values for all objects (e.g., airport
 
 public class SystemManager {
 
+	private HashSet<Airport> airportList = new HashSet<Airport>();
+
 	public void createAirport(String name) {
-		// TODO Auto-generated method stub
-		
+		if(name.length()==3){
+			Airport temp = new Airport(name.toUpperCase());
+			if (!(airportList.contains(temp))){
+				airportList.add(temp);
+				System.out.println("Added Airport "+temp.toString());
+			}
+			else{
+				System.out.println("Airport already added");
+			}
+		}
+		else System.out.println("Airport name error");
 	}
 
 	public void createAirline(String name) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void createFlight(String name, String orig, String dest, int year, int month, int day, String id) {
