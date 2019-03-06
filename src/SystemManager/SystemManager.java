@@ -1,72 +1,95 @@
 package SystemManager;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
-import concreteObjects.Airport;
-import flight.SeatClass;
+import concrete.*;
+import seatClass.*;
 
-/*SystemManager: This class provides the interface (Façade) to the system.  That is, clients interact with the system by calling operations in the SystemManager.  The SystemManager is linked to all the airport and airline objects in the system.  When it is created, the SystemManager has no airport or airline objects linked to it.  To create airports and airlines, the createAirport() and createAirline() operations defined in this class must be invoked.  The class also contains operations for creating sections of flights (e.g., first class and business class sections), finding available flights between two airports, and booking a seat on a flight.  A printout of information on all the airports, airlines, flights, flight sections and seats is obtained by invoking displaySystemDetails().
+class SystemManager {
+    private ArrayList<Airport> airports = new ArrayList<>();
+    private ArrayList<Airline> airlines = new ArrayList<>();
 
-createAirport(String n): Creates an airport object and links it to the SystemManager.  The airport will have a name (code) n; n must have exactly three characters.  No two airports can have the same name.
+    void createAirport(String n) {
+        if(n.length() != 3) {
+            System.out.println("Invalid input "+n+": Airport name must be 3 characters long.");
+        }
+        else {
+            Airport airport = new Airport(n);
+            if(searchAirports(n)!=null) {
+               System.out.println("Airport "+n+" already exists.");
+            }
+            else{
+                airports.add(airport);
+                System.out.println("Created airport "+n+".");
+            }
+        }
+    }
 
-createAirline(String n): Creates an airline object with name n and links it to the SystemManager.  An airline has a name that must have a length less than 6.  No two airlines can have the same name.
+    void createAirline(String n) {
+        if(n.length() > 5) {
+            System.out.println("Invalid input "+n+": Airline name must be less than 6 characters long.");
+        }
+        else {
+            Airline airline = new Airline(n);
+            if(searchAirlines(n)!=null) {
+                System.out.println("Airline "+n+" already exists.");
+            }
+            else{
+                airlines.add(airline);
+                System.out.println("Created airline "+n+".");
+            }
+        }
+    }
 
-createFlight(String aName, String orig, String dest, int year, int month, int day, String id): Creates a flight for an airline named aname, from an originating airport (orig) to a destination airport (dest) on a particular date.  The flight has an identifier (id).
+    Airline searchAirlines(String n) {
+        for(Airline al: airlines) {
+            if(al.getName().equals(n)) {
+                return al;
+            }
+        }
+        return null;
+    }
 
-createSection(String air, String flID, int rows, int cols, SeatClass s): Creates a section, of class s, for a flight with identifier flID, associated with an airline, air.  The section will contain the input number of rows and columns.
+    Airport searchAirports(String n) {
+        for(Airport ap: airports) {
+            if(ap.getName().equals(n)) {
+                return ap;
+            }
+        }
+        return null;
+    }
 
-findAvailableFlights(String orig, String dest): Finds all flights from airport orig to airport dest with seats that are not booked.
+    void createFlight(String aname, String orig, String dest, int year, int month, int day, String id) {
+        Airline al = searchAirlines(aname);
+        if(orig.equals(dest)) {
+            System.out.println("Originating airport ("+orig+") cannot be the same as the destination airport.");
+        }
+        else {
+            Airport origin = searchAirports(orig);
+            Airport destination = searchAirports(dest);
+            if(origin != null && destination != null) {
+                Flight flight = new Flight(origin, destination, id);
+                System.out.println("Created flight "+id+" from "+orig+" to "+dest+".");
+            }
+            else {
+                System.out.println("Airports "+orig+" and/or "+dest+" don't exist.");
+            }
+        }
+    }
 
-bookSeat(String air, String fl, SeatClass s, int row, char col): Books seat in given row and column in section s, on flight fl of airline air.
+    void createSection(String air, String flID, int rows, int cols, SeatClass s) {
 
-displaySystemDetails(): Displays attribute values for all objects (e.g., airports, airplanes) in system.   */
+    }
 
-public class SystemManager {
+    void findAvailableFlights(String orig, String dest) {
 
-	private HashSet<Airport> airportList = new HashSet<Airport>();
+    }
 
-	public void createAirport(String name) {
-		if(name.length()==3){
-			Airport temp = new Airport(name.toUpperCase());
-			if (!(airportList.contains(temp))){
-				airportList.add(temp);
-				System.out.println("Added Airport "+temp.toString());
-			}
-			else{
-				System.out.println("Airport already added");
-			}
-		}
-		else System.out.println("Airport name error");
-	}
+    void bookSeat(String air, String fl, SeatClass s, int row, char col) {
 
-	public void createAirline(String name) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    void displaySystemDetails() {
 
-	public void createFlight(String name, String orig, String dest, int year, int month, int day, String id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void createSection(String airline, String flightID, int rows, int cols, SeatClass economy) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void bookSeat(String airline, String flight, SeatClass first, int row, char col) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void displaySystemDetails() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void findAvailableFlights(String orig, String dest) {
-		// TODO Auto-generated method stub
-		
-	}
-
+    }
 }
