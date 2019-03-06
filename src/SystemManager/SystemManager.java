@@ -1,15 +1,15 @@
 package SystemManager;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import concrete.*;
 import seatClass.*;
 
-class SystemManager {
-    private ArrayList<Airport> airports = new ArrayList<>();
-    private ArrayList<Airline> airlines = new ArrayList<>();
+public class SystemManager {
+    private HashSet<Airport> airports = new HashSet<Airport>();
+    private HashSet<Airline> airlines = new HashSet<Airline>();
 
-    void createAirport(String n) {
+    public void createAirport(String n) {
         if(n.length() != 3) {
             System.out.println("Invalid input "+n+": Airport name must be 3 characters long.");
         }
@@ -25,7 +25,7 @@ class SystemManager {
         }
     }
 
-    void createAirline(String n) {
+    public void createAirline(String n) {
         if(n.length() > 5) {
             System.out.println("Invalid input "+n+": Airline name must be less than 6 characters long.");
         }
@@ -42,7 +42,7 @@ class SystemManager {
     }
 
     Airline searchAirlines(String n) {
-        for(Airline al: airlines) {
+        for(Airline al: airlines){
             if(al.getName().equals(n)) {
                 return al;
             }
@@ -59,7 +59,7 @@ class SystemManager {
         return null;
     }
 
-    void createFlight(String aname, String orig, String dest, int year, int month, int day, String id) {
+    public void createFlight(String aname, String orig, String dest, int year, int month, int day, String id) {
         Airline al = searchAirlines(aname);
         if(orig.equals(dest)) {
             System.out.println("Originating airport ("+orig+") cannot be the same as the destination airport.");
@@ -77,19 +77,19 @@ class SystemManager {
         }
     }
 
-    void createSection(String air, String flID, int rows, int cols, SeatClass s) {
+    public void createSection(String air, String flID, int rows, int cols, SeatClass s) {
 
     }
 
-    void findAvailableFlights(String orig, String dest) {
+    public void findAvailableFlights(String orig, String dest) {
 
     }
 
-    void bookSeat(String air, String fl, SeatClass s, int row, char col) {
+    public void bookSeat(String air, String fl, SeatClass s, int row, char col) {
 
     }
 
-    void displaySystemDetails() {
+    public void displaySystemDetails() {
 
     }
 }

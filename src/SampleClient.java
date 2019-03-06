@@ -1,5 +1,6 @@
 import SystemManager.SystemManager;
-import flight.SeatClass;
+import seatClass.SeatClass;
+
 
 public class SampleClient {
 
