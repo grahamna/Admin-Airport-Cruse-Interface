@@ -10,6 +10,7 @@ public class SystemManager {
     private HashSet<Airline> airlines = new HashSet<Airline>();
 
     public void createAirport(String n) {
+        System.out.println("\nAttempting to create Airport "+n);
         if(n.length() != 3) {
             System.out.println("Invalid input "+n+": Airport name must be 3 characters long.");
         }
@@ -26,6 +27,7 @@ public class SystemManager {
     }
 
     public void createAirline(String n) {
+        System.out.println("\nAttempting to create Airline "+n);
         if(n.length() > 5) {
             System.out.println("Invalid input "+n+": Airline name must be less than 6 characters long.");
         }
@@ -42,6 +44,7 @@ public class SystemManager {
     }
 
     public void createFlight(String aname, String orig, String dest, int year, int month, int day, String id) {
+        System.out.println("\nAttempting to create Flight "+aname);
         if(orig.equals(dest)) {
             System.out.println("Originating airport ("+orig+") cannot be the same as the destination airport.");
         }
@@ -69,6 +72,7 @@ public class SystemManager {
     }
 
     public void createSection(String alName, String flID, int rows, int cols, SeatClass s) {
+        System.out.println("\nAttempting to create Section for Flight "+flID);
         Airline al = searchAirlines(alName);
         if((rows>101||rows<0) || (cols>11||cols<0)) {
             System.out.println("Invalid number of rows/columns: "+rows+" rows, "+cols+" columns.");
@@ -112,6 +116,7 @@ public class SystemManager {
     }
 
     public void findAvailableFlights(String orig, String dest) {
+        System.out.println("\nAttempting to find Flight from "+orig+" to "+dest);
         Airport from = searchAirports(orig);
         Airport to = searchAirports(dest);
         if (from!=null && to!=null){
@@ -125,6 +130,7 @@ public class SystemManager {
     }
 
     public void bookSeat(String air, String fl, SeatClass s, int row, char col) {
+        System.out.println("\nAttempting to bookSeat "+s+" "+row+" "+col+" for Flight "+fl);
         Airline al = searchAirlines(air);
         if (al!=null){
             Flight flight = al.findFlightByID(fl);
@@ -154,6 +160,7 @@ public class SystemManager {
     }
 
     public void displaySystemDetails() {
+        System.out.println("\nDisplaying System details");
         System.out.println("System contains "+airlines.size()+" airlines:");
         for(Airline al:airlines) {
             System.out.println("Airline "+al.getName());
