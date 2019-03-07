@@ -93,7 +93,7 @@ public class FlightSection extends MySystem{
             return false;
         }
         else{
-            return s.booked;
+            return !s.booked;
         }
     }
 }

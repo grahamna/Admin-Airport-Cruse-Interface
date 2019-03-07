@@ -120,8 +120,27 @@ public class SystemManager {
         if (al!=null){
             Flight flight = al.findFlightByID(fl);
             if (flight!=null){
-                flight.findFS(flight.ID, s);
+                FlightSection fs = flight.findFS(flight.ID, s);
+                if (fs!=null && fs.hasAvalableSeats()){
+                    Seat seat = fs.findSeat(row, col);
+                    if (seat!=null && fs.isSeatAvalable(row, col)){
+                        seat.bookSeat();
+                        System.out.println("Booked "+fs.getName()+" Seat "+seat.toString()+" on "+ flight.getInfo());
+                    }
+                    else{
+                        System.out.println("Seat not avalable");
+                    }
+                }
+                else{
+                    System.out.println("FlightSectoin not avalable");
+                }
             }
+            else{
+                System.out.println("Flight not avalable");
+            }
+        }
+        else{
+            System.out.println("Airline not avalable");
         }
     }
 

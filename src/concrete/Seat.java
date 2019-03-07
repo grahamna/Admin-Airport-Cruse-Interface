@@ -11,9 +11,13 @@ public class Seat{
         this.booked=false;
     }
 
+    public void bookSeat(){
+        this.booked=true;
+    }
+
     @Override
     public String toString(){
-        String str = "Row: "+this.row+" Col: "+this.col+" Booked: "+this.booked;
+        String str = "Row: "+this.row+" Col: "+this.col;
         return str;
     }
 }
