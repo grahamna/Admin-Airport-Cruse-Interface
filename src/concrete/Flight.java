@@ -36,7 +36,7 @@ public class Flight extends MySystem{
 
     public void addSection(FlightSection fs){
         if(fs==null) {
-            System.out.println("Flight section "+fs.getName()+" doen't exist.");
+            System.out.println("Flight section doen't exist.");
         }
         else {
             flightSections.add(fs);

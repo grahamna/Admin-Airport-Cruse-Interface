@@ -68,7 +68,7 @@ public class FlightSection extends MySystem{
                 if (c!=' '){
                     Seat temp = new Seat(x, c);
                     sectionSeats.add(temp);
-                    System.out.println("Seat "+temp+" has been added");
+                    System.out.println("Seat "+temp.toString()+" has been added");
                 }
                 else{
                     System.out.println("Seat was found to be invalid");
