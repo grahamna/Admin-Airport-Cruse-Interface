@@ -1,6 +1,7 @@
 package concrete;
 
 import java.util.HashSet;
+import java.util.Iterator;
 
 public class Airline extends MySystem{
 
@@ -11,24 +12,22 @@ public class Airline extends MySystem{
     }
 
     public void addFlight(Flight flight){
-        assert flight!=null:"bad peram Airline.addFlight";
-        if (flightList.contains(flight)){
-            System.out.println("Identical flight already found");
+        if(flight==null) {
+            System.out.println(flight.getName()+" doesn't exist.");
         }
-        else{
-            flightList.add(flight);
+        else {
+            if(findFlightByID(flight.getID())!=null) {
+                System.out.println(flight.getName()+" already exists.");
+            }
+            else{
+                flightList.add(flight);
+            }
         }
-    }
-
-    @Override
-    public String info() {
-    //    return sd.info() + "\nAirline "+getName();
-    return null;
     }
 
     public Flight findFlightByID(String id){
         for (Flight f : flightList) {
-            if (f.ID.equals(id)){
+            if (f.getID().equals(id)){
                 return f;
             }
         }

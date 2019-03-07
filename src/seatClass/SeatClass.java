@@ -1,7 +1,6 @@
 package seatClass;
 
-public class SeatClass{
-	public static SeatClass economy;
-	public static SeatClass first;
-	public static SeatClass business;
+public enum SeatClass{
+	economy, business, first
+
 }

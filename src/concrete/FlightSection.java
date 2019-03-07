@@ -1,24 +1,26 @@
 package concrete;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import seatClass.SeatClass;
 
-public class FlightSection {
+public class FlightSection extends MySystem{
 
-    public ArrayList<Seat> sectionSeats = new ArrayList<Seat>();
+    public HashSet<Seat> sectionSeats = new HashSet<Seat>();
 
-    public SeatClass s;
+    SeatClass s;
     private int rows, cols;
-    public Flight flight;
+    Flight flight;
 
-    public FlightSection(Flight f, int row, int col, SeatClass s){
+    public FlightSection(String name, Flight f, int row, int col, SeatClass s){
+        super(name);
         this.flight=f;
         this.rows=row;
         this.cols=col;
         this.s=s;
         createSeatArray(row, col);
     }
+
 
     public boolean hasAvalableSeats(){
         for(Seat s : this.sectionSeats){
