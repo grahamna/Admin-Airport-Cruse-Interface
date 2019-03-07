@@ -4,7 +4,7 @@ import java.util.HashSet;
 
 import seatClass.SeatClass;
 
-public class FlightSection {
+public class FlightSection extends MySystem{
 
     public HashSet<Seat> sectionSeats = new HashSet<Seat>();
 
@@ -13,7 +13,8 @@ public class FlightSection {
     private Flight flight;
     private Seat[] seats;
 
-    public FlightSection(Flight f, int row, int col, SeatClass s){
+    public FlightSection(String name, Flight f, int row, int col, SeatClass s){
+        super(name);
         this.flight=f;
         this.rows=row;
         this.cols=col;

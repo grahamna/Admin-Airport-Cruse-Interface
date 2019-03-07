@@ -2,32 +2,52 @@ package concrete;
 
 import java.util.ArrayList;
 
-public class Flight {
+public class Flight extends MySystem{
 
-    public String ID;
+    private String ID;
     private FlightInfo fo;
+    private ArrayList<FlightSection> flightSections = new ArrayList<FlightSection>();
 
-    public class FlightInfo{
+    private class FlightInfo extends MySystem{
         private Airport dest, orig;
         private Airline airline;
+        private Date date;
 
-        private FlightInfo(Airport dest, Airport orig, Airline al){
-            this.dest=dest;
-            this.orig=orig;
-            this.airline=al;
+        private FlightInfo(String name, Airport origin, Airport destination, Date d, Airline al){
+            super(name);
+            orig=origin;
+            date=d;
+            dest=destination;
+            airline=al;
+        }
+
+        String getInfo(){
+            return getName()+": "+date.toString();
         }
     }
 
-    public ArrayList<FlightSection> flightSections = new ArrayList<FlightSection>();
-
-    public Flight(Airport orig, Airport dest, String id, Airline al) {
-        fo = new FlightInfo(dest, orig, al);
-        this.ID=id;
+    public Flight(String name, Airport orig, Airport dest, Date d, String id, Airline al) {
+        super(name);
+        fo=new FlightInfo("Flight "+id+" from "+orig.getName()+" to "+dest.getName(), dest, orig, d, al);
+        ID=id;
     }
 
     public void addSection(FlightSection fs){
-        assert fs!=null:"Flight.addSection peram error";
-        flightSections.add(fs);
+        if(fs==null) {
+            System.out.println("Flight section "+fs.getName()+" doen't exist.");
+        }
+        else {
+            flightSections.add(fs);
+        }
+
+    }
+
+    String getID() {
+        return ID;
+    }
+
+    public String getInfo() {
+        return fo.getInfo();
     }
 
 }

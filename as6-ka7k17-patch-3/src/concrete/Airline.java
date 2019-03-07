@@ -12,18 +12,22 @@ public class Airline extends MySystem{
     }
 
     public void addFlight(Flight flight){
-        assert flight!=null:"bad peram Airline.addFlight";
-        if (flightList.contains(flight)){
-            System.out.println("Identical flight already found");
+        if(flight==null) {
+            System.out.println(flight.getName()+" doesn't exist.");
         }
-        else{
-            flightList.add(flight);
+        else {
+            if(findFlightByID(flight.getID())!=null) {
+                System.out.println(flight.getName()+" already exists.");
+            }
+            else{
+                flightList.add(flight);
+            }
         }
     }
 
     public Flight findFlightByID(String id){
         for (Flight f : flightList) {
-            if (f.ID.equals(id)){
+            if (f.getID().equals(id)){
                 return f;
             }
         }
