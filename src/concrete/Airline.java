@@ -35,15 +35,12 @@ public class Airline extends MySystem{
         return null;
     }
 
-    public LinkedList<Flight> printFlightByPath(Airport from, Airport to){
-        LinkedList<Flight> myList = new LinkedList<Flight>();
+    public void printFlightByPath(Airport from, Airport to){
         for(Flight f : this.flightList){
-            System.out.println(f.getInfo());
             if (f.getOrig().equals(from) && f.getDest().equals(to)){
-                myList.add(f);
+                System.out.println("Found Matching Flight:\n"+ f.getInfo());
             }
         }
-        return myList;
     }
 
 }
