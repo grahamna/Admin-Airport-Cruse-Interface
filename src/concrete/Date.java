@@ -8,4 +8,9 @@ public class Date{
         year=y;
         month=m;
     }
+
+    @Override
+    public String toString() {
+        return month+"/"+day+"/"+year;
+    }
 }
