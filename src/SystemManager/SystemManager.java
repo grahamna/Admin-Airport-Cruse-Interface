@@ -81,9 +81,14 @@ public class SystemManager {
         }
         else {
             Flight flight = al.findFlightByID(flID);
-            FlightSection fs = new FlightSection(flight.getName()+" "+s+" class section", flight, rows, cols,s);
-            flight.addSection(fs);
-            System.out.println("Added "+fs.getName()+" to "+flight.getName()+".");
+            if (flight.findFS(flight.ID, s)==null){
+                FlightSection fs = new FlightSection(flight.getName()+" "+s+" class section", flight, rows, cols,s);
+                flight.addSection(fs);
+                System.out.println("Added "+fs.getName()+" to "+flight.getName()+".");
+            }
+            else {
+                System.out.println("An identical flightsection was found");
+            }
         }
 
     }
