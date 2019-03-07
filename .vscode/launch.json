@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "AS6",
+            "request": "launch",
+            "internalConsoleOptions": "openOnFirstSessionStart",
+            "console": "integratedTerminal",
+            "mainClass": "SampleClient",
+            "projectName": "as6"
+        }
+    ]
+}
