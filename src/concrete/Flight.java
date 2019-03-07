@@ -53,7 +53,7 @@ public class Flight extends MySystem{
     }
 
     public FlightSection findFS(String flight, SeatClass s){
-        for(FlightSection fs : this.flightSections){
+        for(FlightSection fs : flightSections){
             if (fs.s == s && fs.flight.ID.equals(flight)){
                 return fs;
             }
