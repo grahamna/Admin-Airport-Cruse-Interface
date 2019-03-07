@@ -1,25 +1,24 @@
 package SystemManager;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 import concrete.*;
 import seatClass.*;
 
 public class SystemManager {
-    private HashSet<Airport> airports = new HashSet<Airport>();
-    private HashSet<Airline> airlines = new HashSet<Airline>();
+    private ArrayList<Airport> airports = new ArrayList<Airport>();
+    private ArrayList<Airline> airlines = new ArrayList<Airline>();
 
     public void createAirport(String n) {
         if(n.length() != 3) {
             System.out.println("Invalid input "+n+": Airport name must be 3 characters long.");
         }
         else {
-            Airport airport = new Airport(n);
-            if(airports.contains(airport)){
+            if(hasAirport(n)){
                 System.out.println("Airport "+n+" already exists.");
             }
             else{
-                airports.add(airport);
+                airports.add(new Airport(n));
                 System.out.println("Created airport "+n+".");
             }
         }
@@ -30,20 +29,19 @@ public class SystemManager {
             System.out.println("Invalid input "+n+": Airline name must be less than 6 characters long.");
         }
         else {
-            Airline airline = new Airline(n);
-            if(airlines.contains(airline)) {
+            if(hasAirline(n)) {
                 System.out.println("Airline "+n+" already exists.");
             }
             else{
-                airlines.add(airline);
+                airlines.add(new Airline(n));
                 System.out.println("Created airline "+n+".");
             }
         }
     }
 
     public void createFlight(String aname, String orig, String dest, int year, int month, int day, String id) {
-        Airline al = new Airline(aname);
-        if (airlines.contains(al)){
+        if (!(hasAirline(aname))){
+            Airline al = getAirline(aname);
             if(orig.equals(dest)) {
                 System.out.println("Originating airport ("+orig+") cannot be the same as the destination airport.");
             }
@@ -51,9 +49,15 @@ public class SystemManager {
                 Airport origin = new Airport(orig);
                 Airport destination = new Airport(dest);
                 if(airports.contains(origin) && airports.contains(destination)) {
-                    Flight flight = new Flight(origin, destination, id, al);
-                    al.addFlight(flight);
-                    System.out.println("Created flight "+id+" from "+orig+" to "+dest+".");
+                    if((day<1 || day>31)||(month<1 || month>12)) {
+                        System.out.println("Invalid date: "+month+"/"+day+"/"+year+".");
+                    }
+                    else{
+                        Date date = new Date(month, day, year);
+                        Flight flight = new Flight(origin, destination, id, al, date);
+                        al.addFlight(flight);
+                        System.out.println("Created flight "+id+" from "+orig+" to "+dest+".");
+                    }
                 }
                 else {
                     System.out.println("Airports "+orig+" and/or "+dest+" don't exist.");
@@ -61,7 +65,7 @@ public class SystemManager {
             }
         }
         else {
-            System.out.println("Airline "+al.toString()+" missing");
+            System.out.println("Airline "+aname+" missing");
         }
     }
 
@@ -90,10 +94,62 @@ public class SystemManager {
     }
 
     public void bookSeat(String air, String fl, SeatClass s, int row, char col) {
-
+        if (hasAirline(air)){
+            Airline al = getAirline(air);
+            Flight flight = al.findFlightByID(fl);
+            if (flight!=null){
+                flight.findFS(flight.ID, s);
+            }
+        }
     }
 
     public void displaySystemDetails() {
 
+    }
+
+
+    public boolean hasAirport(String s){
+        for(Airport a : this.airports) {
+            if (a.name.equals(s)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Airport getAirport(String s) {
+        for(Airport a : this.airports) {
+            if (a.name.equals(s)){
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public boolean hasAirline(String s){
+        for(Airline a : this.airlines) {
+            if (a.name.equals(s)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Airline getAirline(String s) {
+        for(Airline a : this.airlines) {
+            if (a.name.equals(s)){
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public FlightSection findFS(String flight, SeatClass s){
+        for(FlightSection fs : flightSections){
+            if (fs.s == s && fs.flight.ID.equals(flight)){
+                return fs;
+            }
+        }
+        return null;
     }
 }

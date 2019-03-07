@@ -1,7 +1,6 @@
 package concrete;
 
 import java.util.HashSet;
-import java.util.Iterator;
 
 public class Airline extends MySystem{
 
@@ -19,6 +18,12 @@ public class Airline extends MySystem{
         else{
             flightList.add(flight);
         }
+    }
+
+    @Override
+    public String info() {
+    //    return sd.info() + "\nAirline "+getName();
+    return null;
     }
 
     public Flight findFlightByID(String id){
