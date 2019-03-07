@@ -30,7 +30,7 @@ public class Flight extends MySystem{
 
     public Flight(String name, Airport orig, Airport dest, Date d, String id, Airline al) {
         super(name);
-        fo=new FlightInfo("Flight "+id+" from "+orig.getName()+" to "+dest.getName(), dest, orig, d, al);
+        fo=new FlightInfo("Flight "+id+" from "+orig.getName()+" to "+dest.getName(), orig, dest, d, al);
         ID=id;
     }
 
