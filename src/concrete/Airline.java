@@ -2,6 +2,7 @@ package concrete;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 public class Airline extends MySystem{
 
@@ -26,12 +27,23 @@ public class Airline extends MySystem{
     }
 
     public Flight findFlightByID(String id){
-        for (Flight f : flightList) {
+        for (Flight f : this.flightList) {
             if (f.getID().equals(id)){
                 return f;
             }
         }
         return null;
+    }
+
+    public LinkedList<Flight> printFlightByPath(Airport from, Airport to){
+        LinkedList<Flight> myList = new LinkedList<Flight>();
+        for(Flight f : this.flightList){
+            System.out.println(f.getInfo());
+            if (f.getOrig().equals(from) && f.getDest().equals(to)){
+                myList.add(f);
+            }
+        }
+        return myList;
     }
 
 }

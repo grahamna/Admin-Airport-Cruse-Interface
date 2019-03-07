@@ -94,7 +94,7 @@ public class SystemManager {
     }
 
     Airline searchAirlines(String n) {
-        for(Airline al: airlines){
+        for(Airline al: this.airlines){
             if(al.getName().equals(n)) {
                 return al;
             }
@@ -103,7 +103,7 @@ public class SystemManager {
     }
 
     Airport searchAirports(String n) {
-        for(Airport ap: airports) {
+        for(Airport ap: this.airports) {
             if(ap.getName().equals(n)) {
                 return ap;
             }
@@ -112,7 +112,16 @@ public class SystemManager {
     }
 
     public void findAvailableFlights(String orig, String dest) {
-
+        Airport from = searchAirports(orig);
+        Airport to = searchAirports(dest);
+        if (from!=null && to!=null){
+            for(Airline al : airlines){
+                al.printFlightByPath(from, to);
+            }
+        }
+        else{
+            System.out.println("Issue with airport perams");
+        }
     }
 
     public void bookSeat(String air, String fl, SeatClass s, int row, char col) {
