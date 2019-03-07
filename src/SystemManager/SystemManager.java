@@ -41,15 +41,6 @@ public class SystemManager {
         }
     }
 
-    Airline searchAirlines(String n) {
-        for(Airline al: airlines){
-            if(al.getName().equals(n)) {
-                return al;
-            }
-        }
-        return null;
-    }
-
     public void createFlight(String aname, String orig, String dest, int year, int month, int day, String id) {
         Airline al = new Airline(aname);
         if (airlines.contains(al)){
@@ -60,7 +51,8 @@ public class SystemManager {
                 Airport origin = new Airport(orig);
                 Airport destination = new Airport(dest);
                 if(airports.contains(origin) && airports.contains(destination)) {
-                    Flight flight = new Flight(origin, destination, id);
+                    Flight flight = new Flight(origin, destination, id, al);
+                    al.addFlight(flight);
                     System.out.println("Created flight "+id+" from "+orig+" to "+dest+".");
                 }
                 else {
@@ -73,7 +65,23 @@ public class SystemManager {
         }
     }
 
-    public void createSection(String air, String flID, int rows, int cols, SeatClass s) {
+    public void createSection(String alName, String flID, int rows, int cols, SeatClass s) {
+        assert rows<101&&rows>0:"SysMan.createSection row peram error";
+        assert cols<11&&cols>0:"SysMan.createSection col peram error";
+        Airline tempAir = new Airline(alName);
+        if (airlines.contains(tempAir)){
+            Flight f = tempAir.findFlightByID(flID);
+            if (f!=null){
+                f.addSection(new FlightSection(f,rows,cols,s));
+                System.out.println("Added Section to Flight "+f.toString());
+            }
+            else{
+                System.out.println("Flight "+flID+" missing");
+            }
+        }
+        else{
+            System.out.println("Airline "+ tempAir.toString()+" missing");
+        }
 
     }
 
