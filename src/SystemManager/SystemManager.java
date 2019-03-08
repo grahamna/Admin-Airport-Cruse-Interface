@@ -9,6 +9,9 @@ public class SystemManager {
     private HashSet<Airport> airports = new HashSet<>();
     private HashSet<Airline> airlines = new HashSet<>();
 
+    private final int charNumAirport = 3;
+    private final int charNumAirline = 5;
+
     private Airline searchAirlines(String n) {
         for(Airline al: this.airlines){
             if(al.getName().equals(n)) {
@@ -27,46 +30,52 @@ public class SystemManager {
         return null;
     }
 
-    public void createAirport(String n) {
-        System.out.println("Attempting to create Airport "+n+".");
-        if(n.length() != 3) {
-            System.out.println("Invalid input "+n+": Airport name must be 3 characters long.\n");
+    public void createAirport(String name) {
+        System.out.println("Attempting to create Airport "+name+".");
+        if(name.length() != charNumAirport) {
+            System.out.println("Invalid input "+name+": Airport name must be 3 characters long.\n");
         }
         else {
-            Airport airport = new Airport(n);
-            if(searchAirports(n)!=null){
-                System.out.println("Airport "+n+" already exists.\n");
+            Airport airport = new Airport(name);
+            if(searchAirports(name)!=null){
+                System.out.println("Airport "+name+" already exists.\n");
             }
             else{
                 airports.add(airport);
-                System.out.println("Created airport "+n+".\n");
+                System.out.println("Created airport "+name+".\n");
             }
         }
     }
 
-    public void createAirline(String n) {
-        System.out.println("Attempting to create Airline "+n+".");
-        if(n.length() > 5) {
-            System.out.println("Invalid input "+n+": Airline name must be less than 6 characters long.\n");
+    public void createAirline(String name) {
+        System.out.println("Attempting to create Airline "+name+".");
+        if(name.length() > charNumAirline) {
+            System.out.println("Invalid input "+name+": Airline name must be less than 6 characters long.\n");
         }
         else {
-            Airline airline = new Airline(n);
-            if(searchAirlines(n)!=null) {
-                System.out.println("Airline "+n+" already exists.\n");
+            Airline airline = new Airline(name);
+            if(searchAirlines(name)!=null) {
+                System.out.println("Airline "+name+" already exists.\n");
             }
             else{
                 airlines.add(airline);
-                System.out.println("Created airline "+n+".\n");
+                System.out.println("Created airline "+name+".\n");
             }
         }
     }
 
+    private final int minDay = 1;
+    private final int maxDay = 31;
+    private final int minMonth = 1;
+    private final int maxMonth = 12;
+    private final int minYear = 2018;
+    private final int maxYear = 2019;
     public void createFlight(String aname, String orig, String dest, int year, int month, int day, String id) {
         System.out.println("Attempting to create Flight "+id+".");
         if(orig.equals(dest)) {
             System.out.println("Originating airport ("+orig+") cannot be the same as the destination airport.\n");
         }
-        else if((day<1 || day>31)||(month<1 || month>12) || (year<2018 ||year>2019)) {
+        else if((day<minDay || day>maxDay)||(month<minMonth || month>maxMonth| (year<minYear|year>maxYear))) {
             System.out.println("Invalid date: "+month+"/"+day+"/"+year+".\n");
         }
         else if(searchAirlines(aname)==null) {
@@ -89,10 +98,14 @@ public class SystemManager {
         }
     }
 
+    private final int maxRowSection = 101;
+    private final int minRowSection = 0;
+    private final int maxColSection = 11;
+    private final int minColSection = 0;
     public void createSection(String alName, String flID, int rows, int cols, SeatClass s) {
         System.out.println("Attempting to create Section for Flight "+flID+".");
         Airline al = searchAirlines(alName);
-        if((rows>101||rows<0) || (cols>11||cols<0)) {
+        if((rows>maxRowSection||rows<minRowSection) || (cols>maxColSection||cols<minColSection)) {
             System.out.println("Invalid number of rows/columns: "+rows+" rows, "+cols+" columns.\n");
         }
         else if(al==null) {
