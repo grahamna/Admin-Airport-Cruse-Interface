@@ -6,7 +6,7 @@ import seatClass.SeatClass;
 
 public class FlightSection extends MySystem{
 
-    public HashSet<Seat> sectionSeats = new HashSet<>();
+    private HashSet<Seat> sectionSeats = new HashSet<>();
 
     private SeatClass s;
     private int rows, cols;
@@ -111,6 +111,11 @@ public class FlightSection extends MySystem{
         else{
             return (!(s.isBooked()));
         }
+    }
+
+
+    public HashSet<Seat> getSectionSeats() {
+        return sectionSeats;
     }
 
 }

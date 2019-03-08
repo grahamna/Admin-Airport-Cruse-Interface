@@ -4,7 +4,7 @@ import java.util.HashSet;
 
 public class Airline extends MySystem{
 
-    public HashSet<Flight> flightList = new HashSet<>();
+    private HashSet<Flight> flightList = new HashSet<>();
 
     public Airline(String n) {
         super(n);
@@ -40,5 +40,10 @@ public class Airline extends MySystem{
             }
         }
     }
+
+    public HashSet<Flight> getFlightList() {
+        return flightList;
+    }
+
 
 }

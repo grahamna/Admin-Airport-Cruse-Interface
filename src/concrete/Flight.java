@@ -8,7 +8,7 @@ public class Flight extends MySystem{
 
     private String ID;
     private FlightInfo fo;
-    public ArrayList<FlightSection> flightSections = new ArrayList<>();
+    private ArrayList<FlightSection> flightSections = new ArrayList<>();
 
     private class FlightInfo extends MySystem{
         private Airport dest, orig;
@@ -64,6 +64,10 @@ public class Flight extends MySystem{
             }
         }
         return null;
+    }
+
+    public ArrayList<FlightSection> getFlightSections() {
+        return flightSections;
     }
 
 }

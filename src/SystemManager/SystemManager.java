@@ -165,15 +165,15 @@ public class SystemManager {
         System.out.println("System contains "+airlines.size()+" airlines:");
         for(Airline al:airlines) {
             System.out.println("Airline "+al.getName());
-            if(!al.flightList.isEmpty()) {
+            if(!al.getFlightList().isEmpty()) {
                 System.out.println(al.getName()+ " associated flights: ");
-                for(Flight flight:al.flightList) {
+                for(Flight flight:al.getFlightList()) {
                     System.out.println("-"+flight.getInfo());
-                    for(FlightSection fs: flight.flightSections) {
+                    for(FlightSection fs: flight.getFlightSections()) {
                         System.out.println("---Flight section with "+fs.getRows()+" rows and "+fs.getCols()+" columns.");
                         System.out.print("-----");
                         int booked=0;
-                        for(Seat s:fs.sectionSeats) {
+                        for(Seat s:fs.getSectionSeats()) {
                             if(s.isBooked()) {
                                 booked++;
                             }
