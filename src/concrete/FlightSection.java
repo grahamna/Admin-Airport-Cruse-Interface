@@ -39,7 +39,7 @@ public class FlightSection extends MySystem{
     }
 
     public boolean hasAvailableSeats(){
-        for(Seat s : sectionSeats){
+        for(Seat s : getSectionSeats()){
             if (!(s.isBooked())){
                 return true;
             }

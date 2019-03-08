@@ -25,7 +25,7 @@ public class Airline extends MySystem{
     }
 
     public Flight findFlightByID(String id){
-        for (Flight f : this.flightList) {
+        for (Flight f : getFlightList()) {
             if (f.getID().equals(id)){
                 return f;
             }
@@ -34,7 +34,7 @@ public class Airline extends MySystem{
     }
 
     public void printFlightByPath(Airport from, Airport to){
-        for(Flight f : this.flightList){
+        for(Flight f : getFlightList()){
             if (f.getOrig().equals(from) && f.getDest().equals(to)){
                 System.out.println("Found matching flight:\n"+ f.getInfo()+".");
             }
