@@ -6,7 +6,7 @@ import seatClass.SeatClass;
 
 public class Flight extends MySystem{
 
-    public String ID;
+    private String ID;
     private FlightInfo fo;
     public ArrayList<FlightSection> flightSections = new ArrayList<>();
 
@@ -26,6 +26,13 @@ public class Flight extends MySystem{
         }
     }
 
+    Airport getDest(){
+        return fo.dest;
+    }
+    Airport getOrig(){
+        return fo.orig;
+    }
+
     public Flight(String name, Airport orig, Airport dest, Date d, String id) {
         super(name);
         fo=new FlightInfo("Flight "+id+" from "+orig.getName()+" to "+dest.getName(), orig, dest, d);
@@ -42,7 +49,7 @@ public class Flight extends MySystem{
 
     }
 
-    String getID() {
+    public String getID() {
         return ID;
     }
 
@@ -51,19 +58,12 @@ public class Flight extends MySystem{
     }
 
     public FlightSection findFS(String flight, SeatClass s){
-        for(FlightSection fs : flightSections){
-            if (fs.s == s && fs.flight.ID.equals(flight)){
+        for(FlightSection fs : this.flightSections){
+            if (fs.getS() == s && fs.getFlight().ID.equals(flight)){
                 return fs;
             }
         }
         return null;
-    }
-
-    Airport getDest(){
-        return fo.dest;
-    }
-    Airport getOrig(){
-        return fo.orig;
     }
 
 }

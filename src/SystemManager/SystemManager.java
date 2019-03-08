@@ -9,6 +9,24 @@ public class SystemManager {
     private HashSet<Airport> airports = new HashSet<>();
     private HashSet<Airline> airlines = new HashSet<>();
 
+    private Airline searchAirlines(String n) {
+        for(Airline al: this.airlines){
+            if(al.getName().equals(n)) {
+                return al;
+            }
+        }
+        return null;
+    }
+
+    private Airport searchAirports(String n) {
+        for(Airport ap: this.airports) {
+            if(ap.getName().equals(n)) {
+                return ap;
+            }
+        }
+        return null;
+    }
+
     public void createAirport(String n) {
         System.out.println("Attempting to create Airport "+n+".");
         if(n.length() != 3) {
@@ -48,7 +66,7 @@ public class SystemManager {
         if(orig.equals(dest)) {
             System.out.println("Originating airport ("+orig+") cannot be the same as the destination airport.\n");
         }
-        else if((day<1 || day>31)||(month<1 || month>12) || (year<200 ||year>2019)) {
+        else if((day<1 || day>31)||(month<1 || month>12) || (year<2018 ||year>2019)) {
             System.out.println("Invalid date: "+month+"/"+day+"/"+year+".\n");
         }
         else if(searchAirlines(aname)==null) {
@@ -85,7 +103,7 @@ public class SystemManager {
         }
         else {
             Flight flight = al.findFlightByID(flID);
-            if (flight.findFS(flight.ID, s)==null){
+            if (flight.findFS(flight.getID(), s)==null){
                 FlightSection fs = new FlightSection(flight.getName()+" "+s+" class section", flight, rows, cols,s);
                 flight.addSection(fs);
                 System.out.println("Added "+fs.getName()+" to "+flight.getName()+".\n");
@@ -95,24 +113,6 @@ public class SystemManager {
             }
         }
 
-    }
-
-    private Airline searchAirlines(String n) {
-        for(Airline al: this.airlines){
-            if(al.getName().equals(n)) {
-                return al;
-            }
-        }
-        return null;
-    }
-
-    private Airport searchAirports(String n) {
-        for(Airport ap: this.airports) {
-            if(ap.getName().equals(n)) {
-                return ap;
-            }
-        }
-        return null;
     }
 
     public void findAvailableFlights(String orig, String dest) {
@@ -136,7 +136,7 @@ public class SystemManager {
         if (al!=null){
             Flight flight = al.findFlightByID(fl);
             if (flight!=null){
-                FlightSection fs = flight.findFS(flight.ID, s);
+                FlightSection fs = flight.findFS(flight.getID(), s);
                 if (fs!=null && fs.hasAvailableSeats()){
                     Seat seat = fs.findSeat(row, col);
                     if (seat!=null && fs.isSeatAvailable(row, col)){
@@ -174,7 +174,7 @@ public class SystemManager {
                         System.out.print("-----");
                         int booked=0;
                         for(Seat s:fs.sectionSeats) {
-                            if(s.booked) {
+                            if(s.isBooked()) {
                                 booked++;
                             }
                         }

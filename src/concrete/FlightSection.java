@@ -8,9 +8,10 @@ public class FlightSection extends MySystem{
 
     public HashSet<Seat> sectionSeats = new HashSet<>();
 
-    SeatClass s;
+    private SeatClass s;
     private int rows, cols;
-    Flight flight;
+    private Flight flight;
+    private double cost;
 
     public FlightSection(String name, Flight f, int row, int col, SeatClass sc){
         super(name);
@@ -24,14 +25,22 @@ public class FlightSection extends MySystem{
     public int getRows() {
         return rows;
     }
-
+    public double getCost() {
+        return this.cost;
+    }
     public int getCols() {
         return cols;
+    }
+    public SeatClass getS() {
+        return s;
+    }
+    public Flight getFlight() {
+        return flight;
     }
 
     public boolean hasAvailableSeats(){
         for(Seat s : sectionSeats){
-            if (!(s.booked)){
+            if (!(s.isBooked())){
                 return true;
             }
         }
@@ -86,7 +95,7 @@ public class FlightSection extends MySystem{
 
     public Seat findSeat(int row, char col) {
         for (Seat s : this.sectionSeats){
-            if(s.col==col && s.row==row){
+            if(s.getCol()==col && s.getRow()==row){
                 return s;
             }
         }
@@ -100,7 +109,8 @@ public class FlightSection extends MySystem{
             return false;
         }
         else{
-            return !s.booked;
+            return (!(s.isBooked()));
         }
     }
+
 }
