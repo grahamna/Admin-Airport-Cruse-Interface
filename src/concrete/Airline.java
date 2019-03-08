@@ -1,12 +1,10 @@
 package concrete;
 
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
 
 public class Airline extends MySystem{
 
-    public HashSet<Flight> flightList = new HashSet<Flight>();
+    public HashSet<Flight> flightList = new HashSet<>();
 
     public Airline(String n) {
         super(n);
@@ -14,7 +12,7 @@ public class Airline extends MySystem{
 
     public void addFlight(Flight flight){
         if(flight==null) {
-            System.out.println(flight.getName()+" doesn't exist.");
+            System.out.println("Flight doesn't exist.");
         }
         else {
             if(findFlightByID(flight.getID())!=null) {
@@ -38,7 +36,7 @@ public class Airline extends MySystem{
     public void printFlightByPath(Airport from, Airport to){
         for(Flight f : this.flightList){
             if (f.getOrig().equals(from) && f.getDest().equals(to)){
-                System.out.println("Found Matching Flight:\n"+ f.getInfo());
+                System.out.println("Found matching flight:\n"+ f.getInfo()+".");
             }
         }
     }

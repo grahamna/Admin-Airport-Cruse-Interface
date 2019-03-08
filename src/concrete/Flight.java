@@ -8,19 +8,17 @@ public class Flight extends MySystem{
 
     public String ID;
     private FlightInfo fo;
-    private ArrayList<FlightSection> flightSections = new ArrayList<FlightSection>();
+    public ArrayList<FlightSection> flightSections = new ArrayList<>();
 
     private class FlightInfo extends MySystem{
         private Airport dest, orig;
-        private Airline airline;
         private Date date;
 
-        private FlightInfo(String name, Airport origin, Airport destination, Date d, Airline al){
+        private FlightInfo(String name, Airport origin, Airport destination, Date d){
             super(name);
             orig=origin;
             date=d;
             dest=destination;
-            airline=al;
         }
 
         String getInfo(){
@@ -28,15 +26,15 @@ public class Flight extends MySystem{
         }
     }
 
-    public Flight(String name, Airport orig, Airport dest, Date d, String id, Airline al) {
+    public Flight(String name, Airport orig, Airport dest, Date d, String id) {
         super(name);
-        fo=new FlightInfo("Flight "+id+" from "+orig.getName()+" to "+dest.getName(), orig, dest, d, al);
+        fo=new FlightInfo("Flight "+id+" from "+orig.getName()+" to "+dest.getName(), orig, dest, d);
         ID=id;
     }
 
     public void addSection(FlightSection fs){
         if(fs==null) {
-            System.out.println("Flight section doen't exist.");
+            System.out.println("Flight section doesn't exist.");
         }
         else {
             flightSections.add(fs);
@@ -53,7 +51,7 @@ public class Flight extends MySystem{
     }
 
     public FlightSection findFS(String flight, SeatClass s){
-        for(FlightSection fs : this.flightSections){
+        for(FlightSection fs : flightSections){
             if (fs.s == s && fs.flight.ID.equals(flight)){
                 return fs;
             }
@@ -61,11 +59,11 @@ public class Flight extends MySystem{
         return null;
     }
 
-    public Airport getDest(){
-        return this.fo.dest;
+    Airport getDest(){
+        return fo.dest;
     }
-    public Airport getOrig(){
-        return this.fo.orig;
+    Airport getOrig(){
+        return fo.orig;
     }
 
 }

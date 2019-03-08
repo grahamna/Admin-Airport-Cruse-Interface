@@ -6,24 +6,31 @@ import seatClass.SeatClass;
 
 public class FlightSection extends MySystem{
 
-    public HashSet<Seat> sectionSeats = new HashSet<Seat>();
+    public HashSet<Seat> sectionSeats = new HashSet<>();
 
     SeatClass s;
     private int rows, cols;
     Flight flight;
 
-    public FlightSection(String name, Flight f, int row, int col, SeatClass s){
+    public FlightSection(String name, Flight f, int row, int col, SeatClass sc){
         super(name);
-        this.flight=f;
-        this.rows=row;
-        this.cols=col;
-        this.s=s;
+        flight=f;
+        rows=row;
+        cols=col;
+        s=sc;
         createSeatArray(row, col);
     }
 
+    public int getRows() {
+        return rows;
+    }
 
-    public boolean hasAvalableSeats(){
-        for(Seat s : this.sectionSeats){
+    public int getCols() {
+        return cols;
+    }
+
+    public boolean hasAvailableSeats(){
+        for(Seat s : sectionSeats){
             if (!(s.booked)){
                 return true;
             }
@@ -31,7 +38,7 @@ public class FlightSection extends MySystem{
         return false;
     }
 
-    public void createSeatArray(int row, int col){
+    private void createSeatArray(int row, int col){
         for(int x=0;x<row;x++){
             for(int y=0;y<col;y++){
                 char c=' ';
@@ -68,10 +75,10 @@ public class FlightSection extends MySystem{
                 if (c!=' '){
                     Seat temp = new Seat(x, c);
                     sectionSeats.add(temp);
-                    System.out.println("Seat "+temp.toString()+" has been added");
+                    System.out.println("Seat "+temp.toString()+" has been added.");
                 }
                 else{
-                    System.out.println("Seat was found to be invalid");
+                    System.out.println("Seat was found to be invalid.");
                 }
             }
         }
@@ -86,10 +93,10 @@ public class FlightSection extends MySystem{
         return null;
     }
 
-    public boolean isSeatAvalable(int row, char col){
+    public boolean isSeatAvailable(int row, char col){
         Seat s = findSeat(row, col);
         if(s==null){
-            System.out.println("no seat found matching request");
+            System.out.println("No seat found matching request.");
             return false;
         }
         else{
