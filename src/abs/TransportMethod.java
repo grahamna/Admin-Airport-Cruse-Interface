@@ -9,12 +9,14 @@ public abstract class TransportMethod {
     private String ID;
     private Port dest, orig;
     private Date date;
+    private String type;
 
-    public TransportMethod(String n, Port orig, Port dest, Date date) {
+    public TransportMethod(String type,String n, Port orig, Port dest, Date date) {
         this.ID=n;
         this.orig=orig;
         this.dest=dest;
         this.date=date;
+        this.type=type;
     }
     
     public Port getDest(){
@@ -28,6 +30,14 @@ public abstract class TransportMethod {
     }
     public Date getDate(){
         return this.date;
+    }
+    String getType(){
+        return this.type;
+    }
+
+    @Override
+    public String toString(){
+        return null;
     }
 
 }

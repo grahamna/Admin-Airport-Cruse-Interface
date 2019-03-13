@@ -7,7 +7,7 @@ import abs.Company;
 public class Airline extends Company{
 
     public Airline(String n) {
-        super(n);
+        super("Airline",n);
     }
 
     public void addFlight(Flight flight){
@@ -24,17 +24,6 @@ public class Airline extends Company{
         }
     }
 
-    public Flight findFlightByID(String id){
-        return findMethodByID(id);
-    }
-
-    public void printFlightByPath(Airport from, Airport to){
-        for(Flight f : getFlightList()){
-            if (f.getOrig().equals(from) && f.getDest().equals(to)){
-                System.out.println("Found matching flight:\n"+ f.getInfo()+".");
-            }
-        }
-    }
 
 
 }
