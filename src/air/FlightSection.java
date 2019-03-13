@@ -1,10 +1,11 @@
-package concrete;
+package air;
 
 import java.util.HashSet;
 
+import abs.TransportSection;
 import seatClass.SeatClass;
 
-public class FlightSection extends MySystem{
+public class FlightSection extends TransportSection{
 
     private HashSet<Seat> sectionSeats = new HashSet<>();
 

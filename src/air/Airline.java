@@ -1,10 +1,10 @@
-package concrete;
+package air;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
-public class Airline extends MySystem{
+import abs.Company;
 
-    private HashSet<Flight> flightList = new HashSet<>();
+public class Airline extends Company{
 
     public Airline(String n) {
         super(n);
@@ -19,18 +19,13 @@ public class Airline extends MySystem{
                 System.out.println(flight.getName()+" already exists.");
             }
             else{
-                flightList.add(flight);
+                listAdd(flight);
             }
         }
     }
 
     public Flight findFlightByID(String id){
-        for (Flight f : getFlightList()) {
-            if (f.getID().equals(id)){
-                return f;
-            }
-        }
-        return null;
+        return findMethodByID(id);
     }
 
     public void printFlightByPath(Airport from, Airport to){
@@ -39,10 +34,6 @@ public class Airline extends MySystem{
                 System.out.println("Found matching flight:\n"+ f.getInfo()+".");
             }
         }
-    }
-
-    public HashSet<Flight> getFlightList() {
-        return flightList;
     }
 
 
