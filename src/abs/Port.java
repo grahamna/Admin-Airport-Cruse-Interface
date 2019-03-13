@@ -1,16 +1,11 @@
 package abs;
 
-public abstract class Port{
+public abstract class Port extends MyObject{
     private String name;
-    private String type;
 
     public Port(String type,String n){
+        super(type);
         this.name=n;
-        this.type=type;
-    }
-    
-    String getType(){
-        return this.type;
     }
 
     @Override

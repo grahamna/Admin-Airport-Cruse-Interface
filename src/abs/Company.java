@@ -2,14 +2,13 @@ package abs;
 
 import java.util.ArrayList;
 
-public abstract class Company {
+public abstract class Company extends MyObject{
     private ArrayList<TransportMethod> methodList;
     private String name;
-    private String type;
 
     public Company(String type, String name){
+        super(type);
         this.name=name;
-        this.type=type;
         this.methodList=new ArrayList<TransportMethod>();
     }
 
@@ -46,9 +45,5 @@ public abstract class Company {
                 System.out.println("Found matching "+tm.getType()+":\n"+tm.toString()+".");
             }
         }
-    }
-
-    String getType(){
-        return this.type;
     }
 }

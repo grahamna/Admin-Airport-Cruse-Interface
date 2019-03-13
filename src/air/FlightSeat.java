@@ -7,10 +7,12 @@ public class FlightSeat extends Container {
 	private char col;
     private boolean asile, window;
 
-    FlightSeat(int r, char c){
-        row=r;
-        col=c;
-        booked=false;
+    FlightSeat(int r, char c, boolean a, boolean w){
+        super("FlightSeat");
+        this.row=r;
+        this.col=c;
+        this.asile=a;
+        this.window=w;
     }
 
     public int getRow(){
@@ -19,18 +21,15 @@ public class FlightSeat extends Container {
     public char getCol(){
         return this.col;
     }
-
-    public void bookSeat(){
-        booked=true;
+    public boolean isAsile() {
+        return this.asile;
+    }
+    public boolean isWindow() {
+        return this.window;
     }
 
     @Override
     public String toString(){
         return "Row: "+row+" Col: "+col;
     }
-
-    public boolean isBooked() {
-        return booked;
-    }
-
 }

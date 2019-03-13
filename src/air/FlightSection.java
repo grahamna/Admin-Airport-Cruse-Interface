@@ -7,47 +7,22 @@ import local.*;
 
 public class FlightSection extends TransportSection{
 
+    private int rows;
+    private char layout;
+    private String description;
 
-    private SeatClass s;
-    private int rows, cols;
-    private Flight flight;
-    private double cost;
-
-    public FlightSection(String name, Flight f, int row, int col, SeatClass sc){
-        super("FlightSection",name);
-        flight=f;
-        rows=row;
-        cols=col;
-        s=sc;
-        createSeatArray(row, col);
+    public FlightSection(String desc, Flight f, int row, char layout, SeatClass sc,double cost){
+        super("FlightSection",f,sc,cost);
+        this.rows=row;
+        this.description=desc;
+        createSeatArray(row, layout);
     }
 
     public int getRows() {
         return rows;
     }
-    public double getCost() {
-        return this.cost;
-    }
-    public int getCols() {
-        return cols;
-    }
-    public SeatClass getS() {
-        return s;
-    }
-    public Flight getFlight() {
-        return flight;
-    }
 
-    public boolean hasAvailableSeats(){
-        for(Seat s : getSectionSeats()){
-            if (!(s.isBooked())){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void createSeatArray(int row, int col){
+    private void createFlightSeatArray(int row, char layout){
         for(int x=0;x<row;x++){
             for(int y=0;y<col;y++){
                 char c=' ';

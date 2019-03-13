@@ -4,24 +4,15 @@ import java.util.ArrayList;
 
 import abs.TransportMethod;
 import local.Date;
-import seatClass.SeatClass;
 
 public class Flight extends TransportMethod{
 
     private String description;
 
-    String getInfo(){
-        return getName()+": "+getDate().toString();
-    }
-    @Override
-    public String toString(){
-        return this.description;
-    }
-
     public Flight(String desc, Airport orig, Airport dest, Date date, String id) {
-        super(id, orig, dest date);
-        fo=new FlightInfo("Flight "+id+" from "+orig.toString()+" to "+dest.toString(), orig, dest, d);
-        ID=id;
+        super("Flight", id, orig, dest, date);
+        this.description=desc;
+        
     }
 
     public void addSection(FlightSection fs){
@@ -46,12 +37,12 @@ public class Flight extends TransportMethod{
         }
         return null;
     }
-
-    public ArrayList<FlightSection> getFlightSections() {
-        return flightSections;
-    }
 	public String getName() {
 		return null;
-	}
+    }
+    @Override
+    public String toString(){
+        return this.description;
+    }
 
 }
