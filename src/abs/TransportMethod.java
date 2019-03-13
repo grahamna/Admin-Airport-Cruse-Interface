@@ -34,6 +34,7 @@ public abstract class TransportMethod {
     String getType(){
         return this.type;
     }
+    public TransportSection findSection(Transpo)
 
     @Override
     public String toString(){

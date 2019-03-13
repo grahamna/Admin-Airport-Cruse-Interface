@@ -1,11 +1,13 @@
-package concrete;
+package air;
 
-public class Seat{
+import abs.Container;
+
+public class FlightSeat extends Container {
     private int row;
 	private char col;
-    private boolean booked;
+    private boolean asile, window;
 
-    Seat(int r, char c){
+    FlightSeat(int r, char c){
         row=r;
         col=c;
         booked=false;

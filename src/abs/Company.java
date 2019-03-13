@@ -13,12 +13,22 @@ public abstract class Company {
         this.methodList=new ArrayList<TransportMethod>();
     }
 
-    public void listAdd(TransportMethod tm) {
-        methodList.add(tm);
-    }
-
     public ArrayList<TransportMethod> getMethodList() {
         return this.methodList;
+    }
+
+    public void addMethod(TransportMethod tm){
+        if (tm==null){
+            System.out.println(tm.getType()+" doesn't exist");
+        }
+        else {
+            if (findMethodByID(tm.getID())!=null){
+                System.out.println(tm.getType()+" "+tm.getID()+" already exists.");
+            }
+            else{
+                methodList.add(tm);
+            }
+        }
     }
 
     public TransportMethod findMethodByID(String id) {

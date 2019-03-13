@@ -1,13 +1,12 @@
 package air;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 import abs.TransportSection;
-import seatClass.SeatClass;
+import local.*;
 
 public class FlightSection extends TransportSection{
 
-    private HashSet<Seat> sectionSeats = new HashSet<>();
 
     private SeatClass s;
     private int rows, cols;
@@ -15,7 +14,7 @@ public class FlightSection extends TransportSection{
     private double cost;
 
     public FlightSection(String name, Flight f, int row, int col, SeatClass sc){
-        super(name);
+        super("FlightSection",name);
         flight=f;
         rows=row;
         cols=col;
