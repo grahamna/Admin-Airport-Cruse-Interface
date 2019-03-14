@@ -13,6 +13,7 @@ public abstract class Company extends MyObject{
     }
 
     public ArrayList<TransportMethod> getMethodList() {
+        this.methodList.trimToSize();
         return this.methodList;
     }
 

@@ -32,6 +32,7 @@ public abstract class TransportMethod extends MyObject{
         return this.date;
     }
     public ArrayList<TransportSection> getSectionList(){
+        this.sectionList.trimToSize();
         return this.sectionList;
     }
 

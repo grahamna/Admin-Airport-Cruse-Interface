@@ -1,96 +1,56 @@
 package air;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
+import abs.Container;
 import abs.TransportSection;
 import local.*;
 
-public class FlightSection extends TransportSection{
+public class FlightSection extends TransportSection {
 
     private int rows;
-    private char layout;
+    private Layout layout;
     private String description;
+    private LinkedList<FlightSeat> myList;
 
-    public FlightSection(String desc, Flight f, int row, char layout, SeatClass sc,double cost){
-        super("FlightSection",f,sc,cost);
-        this.rows=row;
-        this.description=desc;
-        createSeatArray(row, layout);
+    public FlightSection(String desc, Flight f, int row, char c, SeatClass sc, double cost) {
+        super("FlightSection", f, sc, cost);
+        this.rows = row;
+        this.layout = new Layout(c, this.rows);
+        this.sectionCapasity = this.layout.getList();
+        this.description = desc;
     }
 
     public int getRows() {
-        return rows;
+        return this.rows;
+    }
+    public Layout getLayout() {
+        return this.layout;
     }
 
-    private void createFlightSeatArray(int row, char layout){
-        for(int x=0;x<row;x++){
-            for(int y=0;y<col;y++){
-                char c=' ';
-                if (y==0){
-                    c='A';
-                }
-                else if (y==1){
-                    c='B';
-                }
-                else if (y==2){
-                    c='C';
-                }
-                else if (y==3){
-                    c='D';
-                }
-                else if (y==4){
-                    c='E';
-                }
-                else if (y==5){
-                    c='F';
-                }
-                else if (y==6){
-                    c='G';
-                }
-                else if (y==7){
-                    c='H';
-                }
-                else if (y==8){
-                    c='I';
-                }
-                else if (y==9){
-                    c='J';
-                }
-                if (c!=' '){
-                    Seat temp = new Seat(x, c);
-                    sectionSeats.add(temp);
-                    System.out.println("Seat "+temp.toString()+" has been added.");
-                }
-                else{
-                    System.out.println("Seat was found to be invalid.");
-                }
-            }
-        }
+    public boolean hasAvalableFlightSeats() {
+        return super.hasAvailableContainers();
     }
 
-    public Seat findSeat(int row, char col) {
-        for (Seat s : this.sectionSeats){
-            if(s.getCol()==col && s.getRow()==row){
-                return s;
+    public FlightSeat findFlightSeat(int row, char col) {
+        for (Container s : this.getSectionCapasity()) {
+            FlightSeat fs = (FlightSeat) s;
+            if(fs.getCol()==col && fs.getRow()==row){
+                return fs;
             }
         }
         return null;
     }
 
     public boolean isSeatAvailable(int row, char col){
-        Seat s = findSeat(row, col);
-        if(s==null){
+        FlightSeat fs = findFlightSeat(row, col);
+        if(fs==null){
             System.out.println("No seat found matching request.");
             return false;
         }
         else{
-            return (!(s.isBooked()));
+            return (!(fs.isBooked()));
         }
-    }
-
-
-    public HashSet<Seat> getSectionSeats() {
-        return sectionSeats;
     }
 
 }

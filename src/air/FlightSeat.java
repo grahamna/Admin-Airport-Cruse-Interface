@@ -7,7 +7,7 @@ public class FlightSeat extends Container {
 	private char col;
     private boolean asile, window;
 
-    FlightSeat(int r, char c, boolean a, boolean w){
+    public FlightSeat(int r, char c, boolean a, boolean w){
         super("FlightSeat");
         this.row=r;
         this.col=c;

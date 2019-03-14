@@ -1,10 +1,10 @@
 package abs;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import local.*;
 
 public abstract class TransportSection extends MyObject{
-    private ArrayList<Container> sectionCapasity;
+    protected LinkedList<Container> sectionCapasity;
     private SeatClass s;
     private double cost;
     private TransportMethod tm;
@@ -16,7 +16,7 @@ public abstract class TransportSection extends MyObject{
         this.s=sc;
     }
 
-    public ArrayList<Container> getSectionCapasity() {
+    public LinkedList<Container> getSectionCapasity() {
         return this.sectionCapasity;
     }
     public SeatClass getSeatClass() {
