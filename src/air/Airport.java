@@ -5,7 +5,7 @@ import abs.Port;
 public class Airport extends Port{
 
     public Airport(String n){
-        super(n);
+        super("Airport",n);
     }
 
 }
