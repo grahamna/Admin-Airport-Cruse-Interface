@@ -29,14 +29,6 @@ public class Flight extends TransportMethod{
         return fo.getInfo();
     }
 
-    public FlightSection findFS(String flight, SeatClass s){
-        for(FlightSection fs : getFlightSections()){
-            if (fs.getS() == s && fs.getFlight().ID.equals(flight)){
-                return fs;
-            }
-        }
-        return null;
-    }
 	public String getName() {
 		return null;
     }

@@ -35,6 +35,17 @@ public abstract class TransportMethod extends MyObject{
         return this.sectionList;
     }
 
+    public void addTS(TransportSection ts, SeatClass sc){
+        if (ts==null){
+            System.out.println(getType()+"Section doesn't exist.");
+        }
+        else if(findSection(this, sc)!=null){
+            System.out.println(getType()+"Section with SeatClass "+sc.toString()+" already exists");
+        }
+        else{
+            this.sectionList.add(ts);
+        }
+    }
     public TransportSection findSection(TransportMethod tm, SeatClass sc) {
         for(TransportSection ts : tm.getSectionList()){
             if(ts.getSeatClass().equals(sc)){
