@@ -1,0 +1,39 @@
+[DEN, NYC, SEA, LAX, NOPE] //Airport strlen
+{AMER
+    [AA1|2019, 10, 8, 16, 30|DEN|LAX[E:200:S:4,F:500:S:2], 
+    AA2|2019, 8, 9, 7, 30|LAX|DEN[E:200:S:5,F:500:S:3], 
+    AA1|2019, 10, 8, 16, 30|DEN|LAX[E:200:S:4,F:500:S:2], //repeat
+    AA3|2010, 10, 8, 16, 30|DEN|LAX[E:200:S:4,F:500:S:2], //date Year
+    AA3|2019, 13, 8, 16, 30|DEN|LAX[E:200:S:4,F:500:S:2], //date Month
+    AA3|2019, 10, 40, 16, 30|DEN|LAX[E:200:S:4,F:500:S:2],//date Day
+    AA3|2019, 10, 8, 25, 30|DEN|LAX[E:200:S:4,F:500:S:2], //date Hour
+    AA3|2019, 10, 8, 16, 70|DEN|LAX[E:200:S:4,F:500:S:2], //date Min
+    AA4|2011, 10, 8, 16, 30|DEN|DEN[E:200:S:4,F:500:S:2], //Airport orig=dest
+    AA4|2019, 10, 8, 16, 30|NOP|LAX[E:200:S:4,F:500:S:2], //Airport orig
+    AA4|2019, 10, 8, 16, 30|DEN|NOP[E:200:S:4,F:500:S:2], //Airport dest
+    AA5|2019, 10, 8, 16, 30|DEN|LAX[Z:200:S:4,F:500:S:2], //FlightSection SeatClass
+    AA5|2019, 10, 8, 16, 30|DEN|LAX[E:200:S:4,E:500:S:2], //FlightSection SC doup
+    AA5|2019, 10, 8, 16, 30|DEN|LAX[E:-200:S:4,F:500:S:2],//FlightSection Cost
+    AA5|2019, 10, 8, 16, 30|DEN|LAX[E:200:Z:4,F:500:S:2], //FlightSection Layout
+    AA5|2019, 10, 8, 16, 30|DEN|LAX[E:200:S:0,F:500:S:2], //FlightSection RowNum
+    ZZZZAA6|2019, 10, 8, 16, 30|DEN|LAX[E:200:S:4,F:500:S:2], //Flight ID len
+    ],
+ NOPENOPENOPE,[BAD[BA|D]BAD:B:AD], //Not sure how to handle this, (airline len then skip all "flights?")
+ UNTD
+    [UA21|2019, 11, 8, 12, 30|NYC|SEA[E:300:S:6, F:800:S:3], 
+    UA12|2019, 8, 9, 7, 30|SEA|DEN[B:700:S:5, F:1200:S:2], ],
+ FRONT[FRA1|2019, 10, 8, 16, 30|DEN|LAX[E:250:M:3,F:400:M:2],
+ USAIR[USA1|2019, 10, 8, 16, 30|DEN|LAX[E:300:W:4,F:550:W:2]}
+
+        //Our Test Search should be for a flight from DEN to LAX, on 2019,10,8 16:30
+
+
+
+
+
+
+
+
+
+ ORIGIONAL
+ [DEN, NYC, SEA, LAX]{AMER[AA1|2011, 10, 8, 16, 30|DEN|LAX[E:200:S:4,F:500:S:2], AA2|2011, 8, 9, 7, 30|LAX|DEN[E:200:S:5,F:500:S:3], …], UNTD[UA21|2011, 11, 8, 12, 30|NYC|SEA[E:300:S:6, F:800:S:3], UA12|2011, 8, 9, 7, 30|SEA|DEN[B:700:S:5, F:1200:S:2], …], FRONT[…], USAIR[…]}

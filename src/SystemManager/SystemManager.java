@@ -2,12 +2,8 @@ package SystemManager;
 
 import java.util.HashSet;
 
-import concrete.*;
-import seatClass.*;
 
 public class SystemManager {
-    private HashSet<Airport> airports = new HashSet<>();
-    private HashSet<Airline> airlines = new HashSet<>();
 
     private final int charNumAirport = 3;
     private final int charNumAirline = 5;
