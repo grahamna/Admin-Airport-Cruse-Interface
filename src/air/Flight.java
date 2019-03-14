@@ -1,6 +1,5 @@
 package air;
 
-import java.util.ArrayList;
 
 import abs.TransportMethod;
 import local.Date;
@@ -15,19 +14,6 @@ public class Flight extends TransportMethod{
         
     }
 
-    public void addSection(FlightSection fs){
-        if(fs==null) {
-            System.out.println("Flight section doesn't exist.");
-        }
-        else {
-            flightSections.add(fs);
-        }
-
-    }
-
-    public String getInfo() {
-        return fo.getInfo();
-    }
 
 	public String getName() {
 		return null;

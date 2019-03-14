@@ -40,4 +40,9 @@ public abstract class TransportSection extends MyObject{
         }
         return false;
     }
+
+    @Override
+    public String toString(){
+        return null;
+    }
 }

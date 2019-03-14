@@ -1,7 +1,5 @@
 package air;
 
-import java.util.ArrayList;
-
 import abs.Company;
 
 public class Airline extends Company{

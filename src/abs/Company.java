@@ -18,7 +18,7 @@ public abstract class Company extends MyObject{
 
     public void addMethod(TransportMethod tm){
         if (tm==null){
-            System.out.println(tm.getType()+" doesn't exist");
+            System.out.println("Object doesn't exist");
         }
         else {
             if (findMethodByID(tm.getID())!=null){
@@ -45,5 +45,10 @@ public abstract class Company extends MyObject{
                 System.out.println("Found matching "+tm.getType()+":\n"+tm.toString()+".");
             }
         }
+    }
+
+    @Override
+    public String toString(){
+        return this.name;
     }
 }

@@ -14,4 +14,9 @@ public abstract class Container extends MyObject{
     public boolean isBooked(){
         return this.booked;
     }
+
+    @Override
+    public String toString(){
+        return null;
+    }
 }
