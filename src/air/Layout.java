@@ -9,9 +9,9 @@ public class Layout{
     private LinkedList<Container> seatList;
     private layoutType lt;
 
-    public Layout(char l, int row) {
+    public Layout(char l, int r) {
         char temp = Character.toUpperCase(l);
-        this.row = row;
+        row = r;
         if (temp=='S'){
             lt = new layout_S();
         }
@@ -24,17 +24,17 @@ public class Layout{
         else{
             System.out.println("Invalid Layout char");
         }
-        createContainerList(this.row);
+        createContainerList(row);
     }
 
     public LinkedList<Container> getList() {
-        return this.seatList;
+        return seatList;
     }
 
     abstract class layoutType {
         int col;
         boolean window=false;
-        boolean asile=false;
+        boolean aisle=false;
         abstract Container makeSeat(int row, int col, char c);
     }
 
@@ -49,40 +49,40 @@ public class Layout{
                 window=true;
             }
             if (col==0 || col==1){
-                asile=true;
+                aisle=true;
             }
-            Container fs = new FlightSeat(row,c,asile,window);
+            Container fs = new FlightSeat(row,c,aisle,window);
             return fs;
         }
     }    
     private class layout_M extends layoutType {
         private layout_M() {
-            this.col=3;
+            col=3;
         }
         
         Container makeSeat(int row, int col, char c){
             if (col==0 || col==3){
-                this.window=true;
+                window=true;
             }
             if (col==1 || col==2){
-                this.asile=true;
+                aisle=true;
             }
-            Container fs = new FlightSeat(row,c,asile,window);
+            Container fs = new FlightSeat(row,c,aisle,window);
             return fs;
         }
     }
     private class layout_W extends layoutType{
         private layout_W() {
-            this.col=9;
+            col=9;
         }
         Container makeSeat(int row, int col, char c){
             if (col==0 || col==9){
-                this.window=true;
+                window=true;
             }
             if (col==2 || col==3 || col==6 || col==7){
-                this.asile=true;
+                aisle=true;
             }
-            Container fs = new FlightSeat(row,c,asile,window);
+            Container fs = new FlightSeat(row,c,aisle,window);
             return fs;
         }
         
@@ -123,7 +123,7 @@ public class Layout{
                     c='J';
                 }
                 if (c!=' '){
-                    Container temp = this.lt.makeSeat(x,y,c);
+                    Container temp = lt.makeSeat(x,y,c);
                     seatList.add(temp);
                     System.out.println("Seat "+temp.toString()+" has been added.");
                 }

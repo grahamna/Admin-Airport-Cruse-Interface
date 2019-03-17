@@ -1,16 +1,20 @@
 package abs;
 
+import java.util.HashSet;
+
 public abstract class Port extends MyObject{
-    private String name;
-
-    public Port(String type,String n){
-        super(type);
-        this.name=n;
+    public Port(String n, String t) {
+        super(n, t);
     }
 
-    @Override
-    public String toString() {
-        return this.name;
+    public Port searchPorts(String n, HashSet<Port> ports) {
+        for(Port port: ports){
+            if(port.toString().equals(n)) {
+                return port;
+            }
+        }
+        return null;
     }
+
 }
 

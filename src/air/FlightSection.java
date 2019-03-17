@@ -10,26 +10,29 @@ public class FlightSection extends TransportSection {
 
     private int rows;
     private Layout layout;
-    private String description;
-    private LinkedList<FlightSeat> myList;
+    private LinkedList<FlightSeat> list;
 
-    public FlightSection(String desc, Flight f, int row, char c, SeatClass sc, double cost) {
-        super("FlightSection", f, sc, cost);
-        this.rows = row;
-        this.layout = new Layout(c, this.rows);
-        this.sectionCapasity = this.layout.getList();
-        this.description = desc;
+    public FlightSection(String name, Flight f, int row, char c, SeatClass sc, double cost) {
+        super(name,"FlightSection", f, sc, cost);
+        rows = row;
+        layout = new Layout(c, rows);
+        sectionCapasity = layout.getList();
     }
 
     public int getRows() {
-        return this.rows;
+        return rows;
     }
+
     public Layout getLayout() {
-        return this.layout;
+        return layout;
     }
 
     public boolean hasAvalableFlightSeats() {
         return super.hasAvailableContainers();
+    }
+
+    public LinkedList<FlightSeat> getSeats() {
+        return list;
     }
 
     public FlightSeat findFlightSeat(int row, char col) {

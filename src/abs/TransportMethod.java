@@ -1,63 +1,53 @@
 package abs;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import local.Date;
 import local.SeatClass;
 
 public abstract class TransportMethod extends MyObject{
-    private ArrayList<TransportSection> sectionList;
-    private String ID;
     private Port dest, orig;
     private Date date;
 
-    public TransportMethod(String type, String n, Port orig, Port dest, Date date) {
-        super(type);
-        this.ID=n;
-        this.orig=orig;
-        this.dest=dest;
-        this.date=date;
+    public TransportMethod(String type, String n, Port origin, Port destination, Date d) {
+        super(n, type);
+        orig=origin;
+        dest=destination;
+        date=d;
     }
     
     public Port getDest(){
-        return this.dest;
+        return dest;
     }
     public Port getOrig(){
-        return this.orig;
-    }
-    public String getID(){
-        return this.ID;
-    }
-    public Date getDate(){
-        return this.date;
-    }
-    public ArrayList<TransportSection> getSectionList(){
-        this.sectionList.trimToSize();
-        return this.sectionList;
+        return orig;
     }
 
-    public void addTS(TransportSection ts, SeatClass sc){
+    public Date getDate(){
+        return date;
+    }
+
+    public HashSet<TransportSection> getSectionList(HashSet<TransportSection> sectionList){
+        return sectionList;
+    }
+
+    public void addTS(TransportSection ts, SeatClass sc, HashSet<TransportSection> list){
         if (ts==null){
             System.out.println(getType()+"Section doesn't exist.");
         }
-        else if(findSection(this, sc)!=null){
+        else if(findSection(this, sc, list)!=null){
             System.out.println(getType()+"Section with SeatClass "+sc.toString()+" already exists");
         }
         else{
-            this.sectionList.add(ts);
+            list.add(ts);
         }
     }
-    public TransportSection findSection(TransportMethod tm, SeatClass sc) {
-        for(TransportSection ts : tm.getSectionList()){
+    public TransportSection findSection(TransportMethod tm, SeatClass sc, HashSet<TransportSection> list) {
+        for(TransportSection ts : list){
             if(ts.getSeatClass().equals(sc)){
                 return ts;
             }
         }
-        return null;
-    }
-
-    @Override
-    public String toString(){
         return null;
     }
 

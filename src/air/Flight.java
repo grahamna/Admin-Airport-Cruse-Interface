@@ -1,26 +1,28 @@
 package air;
 
-
 import abs.TransportMethod;
-import local.Date;
+import abs.TransportSection;
+import local.*;
+
+import java.util.HashSet;
 
 public class Flight extends TransportMethod{
 
-    private String description;
+    private HashSet<TransportSection> flightSections;
 
-    public Flight(String desc, Airport orig, Airport dest, Date date, String id) {
+    public Flight(String type, Airport orig, Airport dest, Date date, String id) {
         super("Flight", id, orig, dest, date);
-        this.description=desc;
         
     }
 
-
-	public String getName() {
-		return null;
+    public FlightSection findFS(Flight flight, SeatClass s) {
+        FlightSection fs=(FlightSection)super.findSection(flight, s, flightSections);
+        return fs;
     }
-    @Override
-    public String toString(){
-        return this.description;
+
+    public void addFlightSection(FlightSection fs, SeatClass s) {
+        super.addTS(fs, s, flightSections);
+
     }
 
 }

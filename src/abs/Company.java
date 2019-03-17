@@ -1,20 +1,19 @@
 package abs;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public abstract class Company extends MyObject{
     private ArrayList<TransportMethod> methodList;
-    private String name;
 
-    public Company(String type, String name){
-        super(type);
-        this.name=name;
-        this.methodList=new ArrayList<TransportMethod>();
+    public Company(String n, String t){
+        super(n, t);
+        methodList= new ArrayList<>();
     }
 
     public ArrayList<TransportMethod> getMethodList() {
-        this.methodList.trimToSize();
-        return this.methodList;
+        methodList.trimToSize();
+        return methodList;
     }
 
     public void addMethod(TransportMethod tm){
@@ -23,7 +22,7 @@ public abstract class Company extends MyObject{
         }
         else {
             if (findMethodByID(tm.getID())!=null){
-                System.out.println(tm.getType()+" "+tm.getID()+" already exists.");
+                System.out.println(tm.toString()+" "+tm.getID()+" already exists.");
             }
             else{
                 methodList.add(tm);
@@ -48,8 +47,13 @@ public abstract class Company extends MyObject{
         }
     }
 
-    @Override
-    public String toString(){
-        return this.name;
+    public Company searchCompanies(String n, HashSet<Company> companies) {
+        for(Company comp: companies){
+            if(comp.toString().equals(n)) {
+                return comp;
+            }
+        }
+        return null;
     }
+
 }
