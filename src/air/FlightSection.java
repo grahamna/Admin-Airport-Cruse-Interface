@@ -13,7 +13,7 @@ public class FlightSection extends TransportSection {
     private LinkedList<FlightSeat> list;
 
     public FlightSection(String name, Flight f, int row, char c, SeatClass sc, double cost) {
-        super(name,"FlightSection", f, sc, cost);
+        super("FlightSection", name, f, sc, cost);
         rows = row;
         layout = new Layout(c, rows);
         sectionCapasity = layout.getList();

@@ -1,13 +1,50 @@
 package SystemManager;
 
 import air.*;
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+
 import abs.*;
 import local.*;
 
 public class SystemManager {
 
-    private Airline al=new Airline("");
-    private Airport ap=new Airport("");
+    private ArrayList airports = new ArrayList<Airport>();
+
+    public Airport searchAirports(Airport search) {
+        return (Airport) search.searchPorts((Port)search, airports);
+    }
+    public Airport searchAirports(String search) {
+        return (Airport) Port.searchPorts(search, airports);
+    }
+
+    public void addAirport(Airport ap) {
+        airports.add(ap);
+    }
+
+    public ArrayList<Airport> getAirports() {
+        return this.airports;
+    }
+
+
+    private ArrayList airlines = new ArrayList<Airline>();
+
+    public Airline searchAirlines(Airline search) {
+        return (Airline) search.searchCompanies((Company)search, airlines);
+    }
+    public Airline searchAirlines(String search) {
+        return (Airline) Company.searchCompanies(search, airlines);
+    
+    }
+
+    public void addAirline(Airline al) {
+        airlines.add(al);
+    }
+
+    public ArrayList<Airline> getAirlines() {
+        return this.airlines;
+    }
 
     public void createAirport(String name) {
         System.out.println("Attempting to create Airport "+name+".");
@@ -17,12 +54,11 @@ public class SystemManager {
         }
         else {
             Airport airport = new Airport(name);
-            ;
-            if(airport.searchAirports(name)!=null){
+            if(searchAirports(airport)!=null){
                 System.out.println("Airport "+name+" already exists.\n");
             }
             else{
-                airport.addAirport(airport);
+                addAirport(airport);
                 System.out.println("Created airport "+name+".\n");
             }
         }
@@ -36,11 +72,11 @@ public class SystemManager {
         }
         else {
             Airline airline = new Airline(name);
-            if(airline.searchAirlines(name)!=null) {
+            if(searchAirlines(airline)!=null) {
                 System.out.println("Airline "+name+" already exists.\n");
             }
             else{
-                airline.addAirline(airline);
+                addAirline(airline);
                 System.out.println("Created airline "+name+".\n");
             }
         }
@@ -56,35 +92,37 @@ public class SystemManager {
         int minMonth = 1;
         int minHour=1;
         int maxHour=12;
+        int maxMin = 59;
+        int minMin = -0;
         if(orig.equals(dest)) {
             System.out.println("Originating airport ("+orig+") cannot be the same as the destination airport.\n");
         }
-        else if((day<minDay || day>maxDay)||(month<minMonth || month>maxMonth) || (year<minYear || year> maxYear) ||) {
+        else if((day<minDay || day>maxDay)||(month<minMonth || month>maxMonth) || (year<minYear || year> maxYear) || (hour>maxHour || hour<minHour) || (min>maxMin || min<minMin)) {
             System.out.println("Invalid date: "+month+"/"+day+"/"+year+".\n");
         }
-        else if(al.searchAirlines(aname)==null) {
+        else if(searchAirlines(aname)==null) {
             System.out.println("Airline "+aname+" doesn't exist.\n");
         }
-        else if(ap.searchAirports(orig)==null) {
+        else if(searchAirports(orig)==null) {
             System.out.println("Airport "+orig+" doesn't exist.\n");
         }
-        else if(ap.searchAirports(dest)==null) {
+        else if(searchAirports(dest)==null) {
             System.out.println("Airport "+dest+" doesn't exist.\n");
         }
         else {
-            Airline airline = al.searchAirlines(aname);
-            Airport origin = ap.searchAirports(orig);
-            Airport destination = ap.searchAirports(dest);
+            Airline airline = searchAirlines(aname);
+            Airport origin = searchAirports(orig);
+            Airport destination = searchAirports(dest);
             Date date = new Date(month, day, year, hour, min);
             Flight flight = new Flight("Flight "+id, origin, destination, date, id);
-            airline.addFlight(flight);
+            airline.addMethod(flight);
             System.out.println("Created flight "+id+" from "+orig+" to "+dest+".\n");
         }
     }
 
     public void createSection(String alName, String flID, int rows, char cols, SeatClass s, double cost) {
         System.out.println("Attempting to create Section for Flight "+flID+".");
-        Airline airline = al.searchAirlines(alName);
+        Airline airline = searchAirlines(alName);
         int maxRowSection = 101;
         int minRowSection = 0;
         int maxColSection = 11;
@@ -99,7 +137,7 @@ public class SystemManager {
             System.out.println("Flight "+flID+" doesn't exist.\n");
         }
         else {
-            Flight flight = airline.findFlightByID(flID);
+            Flight flight = (Flight) airline.findFlightByID(flID);
             if (flight.findFS(flight, s)==null){
                 FlightSection fs = new FlightSection(flight+" "+s+" class section", flight, rows, cols, s, cost);
                 flight.addFlightSection(fs, s);
@@ -114,11 +152,11 @@ public class SystemManager {
 
     public void findAvailableFlights(String orig, String dest) {
         System.out.println("Attempting to find Flight from "+orig+" to "+dest+".");
-        Airport from = ap.searchAirports(orig);
-        Airport to = ap.searchAirports(dest);
+        Airport from = searchAirports(orig);
+        Airport to = searchAirports(dest);
         if (from!=null && to!=null){
-            for(Company al : al.getAirlines()){
-                al.printFlightByPath(from, to);
+            for(Airline al : getAirlines()){
+                al.methodPathFinder(from, to);
             }
             System.out.println();
         }
@@ -129,15 +167,15 @@ public class SystemManager {
 
     public void bookSeat(String air, String fl, SeatClass s, int row, char col) {
         System.out.println("Attempting to book seat "+s+" "+row+" "+col+" for Flight "+fl+".");
-        Airline airline = al.searchAirlines(air);
+        Airline airline = searchAirlines(air);
         if(airline!=null){
             Flight flight = airline.findFlightByID(fl);
             if (flight!=null){
                 FlightSection fs = flight.findFS(flight, s);
-                if (fs!=null && fs.hasAvailableSeats()){
+                if (fs!=null && fs.hasAvalableFlightSeats()){
                     FlightSeat seat = fs.findFlightSeat(row, col);
                     if (seat!=null && fs.isSeatAvailable(row, col)){
-                        seat.bookSeat();
+                        seat.bookContainer();;
                         System.out.println("Booked "+fs+" Seat "+seat+" on "+ flight+".\n");
                     }
                     else{
@@ -157,35 +195,7 @@ public class SystemManager {
         }
     }
 
-    public void displaySystemDetails() {
-        System.out.println("Displaying System details.");
-        System.out.println("System contains "+al.getAirlines().size()+" airlines:");
-        for(Company airline:al.getAirlines()) {
-            System.out.println("Airline "+airline);
-            if(!airline.getFlightList().isEmpty()) {
-                System.out.println(airline+ " associated flights: ");
-                for(Flight flight:airline.getFlightList()) {
-                    System.out.println("-"+flight.getInfo());
-                    for(FlightSection fs: flight.getFlightSections()) {
-                        System.out.println("---Flight section with "+fs.getRows()+" rows and "+fs.getCols()+" columns.");
-                        System.out.print("-----");
-                        int booked=0;
-                        for(FlightSeat s:fs.getSeats()) {
-                            if(s.isBooked()) {
-                                booked++;
-                            }
-                        }
-                        int seats = fs.getCols()*fs.getRows();
-                        int available = seats-booked;
-                        System.out.println(seats+" seats, "+booked+" booked and "+available+" avaiable.");
-                    }
-                }
-            }
-        }
-        System.out.println("System contains "+ap.getAirports().size()+" airports:");
-        for(Port ap:ap.getAirports()) {
-            System.out.println("Airport "+ap);
-        }
-        System.out.println();
+    public void displaySystemDetails(PrintStream out) {
+
     }
 }

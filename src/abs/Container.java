@@ -4,7 +4,7 @@ public abstract class Container extends MyObject{
     protected boolean booked;
 
     public Container(String type) {
-        super(type);
+        super(type, "");
         booked=false;
     }
 

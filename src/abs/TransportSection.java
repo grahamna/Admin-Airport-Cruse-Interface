@@ -9,8 +9,8 @@ public abstract class TransportSection extends MyObject{
     private double cost;
     private TransportMethod tm;
 
-    public TransportSection(String name, String type, TransportMethod m, SeatClass sc, double c) {
-        super(name, type);
+    public TransportSection(String type, String id, TransportMethod m, SeatClass sc, double c) {
+        super(type, id);
         tm = m;
         cost = c;
         s=sc;

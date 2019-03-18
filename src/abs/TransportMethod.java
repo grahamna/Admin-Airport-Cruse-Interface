@@ -9,8 +9,8 @@ public abstract class TransportMethod extends MyObject{
     private Port dest, orig;
     private Date date;
 
-    public TransportMethod(String type, String n, Port origin, Port destination, Date d) {
-        super(n, type);
+    public TransportMethod(String type, String ID, Port origin, Port destination, Date d) {
+        super(ID, type);
         orig=origin;
         dest=destination;
         date=d;
@@ -22,7 +22,9 @@ public abstract class TransportMethod extends MyObject{
     public Port getOrig(){
         return orig;
     }
-
+    public String getID(){
+        return this.getID();
+    }
     public Date getDate(){
         return date;
     }

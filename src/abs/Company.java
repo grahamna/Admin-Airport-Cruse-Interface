@@ -1,13 +1,13 @@
 package abs;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public abstract class Company extends MyObject{
+
     private ArrayList<TransportMethod> methodList;
 
-    public Company(String n, String t){
-        super(n, t);
+    public Company(String type, String name){
+        super(type, name);
         methodList= new ArrayList<>();
     }
 
@@ -47,9 +47,17 @@ public abstract class Company extends MyObject{
         }
     }
 
-    public Company searchCompanies(String n, HashSet<Company> companies) {
+    public Company searchCompanies(Company c, ArrayList<Company> companies) {
         for(Company comp: companies){
-            if(comp.toString().equals(n)) {
+            if(comp.getName().equals(c.getName())&&comp.getType().equals(c.getType())) {
+                return comp;
+            }
+        }
+        return null;
+    }
+    public static Company searchCompanies(String c, ArrayList<Company> companies) {
+        for(Company comp: companies){
+            if(comp.getName().equals(c)) {
                 return comp;
             }
         }
