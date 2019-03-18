@@ -14,7 +14,7 @@ public class AdminUI extends UI{
     public void Interface() {
         System.out.println("Welcome to the Flight Administrator Interface.\nTo begin, please select an option:\n");
         while(selection!=0) {
-            System.out.println("1. Create an airport system.\n2. Change the price associated with seats.\n" +
+            System.out.println("1. Create an airport system from file.\n2. Change the price associated with seats.\n" +
                     "3. Query the system for flights with available seats.\n4. Change the seat class pricing for a given airline." +
                     "\n5. Book a seat.\n6. Book a seat with seating preference.\n7. Display system details.\n8. Store system information in a file.\n" +
                     "0. Exit.\n");
@@ -41,7 +41,7 @@ public class AdminUI extends UI{
             case 0:
                 break;
             case 1:
-                createAirport();
+                createAirportFromFile();
                 break;
             case 2:
                 changeSeatPrice();
@@ -69,7 +69,7 @@ public class AdminUI extends UI{
         }
     }
 
-    private void createAirport() {
+    private void createAirportFromFile() {
         System.out.println("Please enter a file path to use as input for creating the airport system.\nTo go back to the selection menu, enter 'X'.");
         boolean completed=false;
         while(!completed) {
@@ -93,7 +93,8 @@ public class AdminUI extends UI{
     }
 
     private void changeSeatPrice() {
-        //TODO ask user to specify flight section, check if it exists, then ask for new price
+        displayDetails();
+        System.out.println("Which Airline do you wish to change?");
     }
 
     private void findFlights() {

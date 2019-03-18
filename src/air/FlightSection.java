@@ -9,14 +9,16 @@ import local.*;
 public class FlightSection extends TransportSection {
 
     private int rows;
+    private char layChar;
     private Layout layout;
     private LinkedList<FlightSeat> list;
 
     public FlightSection(String name, Flight f, int row, char c, SeatClass sc, double cost) {
         super("FlightSection", name, f, sc, cost);
-        rows = row;
-        layout = new Layout(c, rows);
-        sectionCapasity = layout.getList();
+        this.rows = row;
+        this.layChar = c;
+        this.layout = new Layout(this.layChar,this.rows);
+        this.sectionCapasity = layout.getList();
     }
 
     public int getRows() {
@@ -54,6 +56,12 @@ public class FlightSection extends TransportSection {
         else{
             return (!(fs.isBooked()));
         }
+    }
+
+    @Override
+    public String toString(){
+        String res = "["+super.toString()+this.layChar+":"+this.rows+"], ";
+        return res;
     }
 
 }

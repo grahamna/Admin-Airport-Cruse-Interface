@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Port extends MyObject{
 
-    public Port(String type, String name) {
+    protected Port(String type, String name) {
         super(type, name);
     }
 
@@ -23,6 +23,11 @@ public abstract class Port extends MyObject{
             }
         }
         return null;
+    }
+
+    @Override
+    public String toString(){
+        return this.getName();
     }
 }
 

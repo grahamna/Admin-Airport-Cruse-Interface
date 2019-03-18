@@ -2,21 +2,23 @@ package abs;
 
 import java.util.ArrayList;
 
+import air.Flight;
+
 public abstract class Company extends MyObject{
 
-    private ArrayList<TransportMethod> methodList;
+    private ArrayList methodList;
 
-    public Company(String type, String name){
+    protected Company(String type, String name){
         super(type, name);
-        methodList= new ArrayList<>();
+        methodList= new ArrayList<TransportMethod>();
     }
 
-    public ArrayList<TransportMethod> getMethodList() {
+    protected ArrayList<TransportMethod> getMethodList() {
         methodList.trimToSize();
         return methodList;
     }
 
-    public void addMethod(TransportMethod tm){
+    protected void addMethod(TransportMethod tm){
         if (tm==null){
             System.out.println("Object doesn't exist");
         }
@@ -30,7 +32,7 @@ public abstract class Company extends MyObject{
         }
     }
 
-    public TransportMethod findMethodByID(String id) {
+    protected TransportMethod findMethodByID(String id) {
         for(TransportMethod tm : getMethodList()){
             if (tm.getID().equals(id)){
                 return tm;
@@ -39,7 +41,7 @@ public abstract class Company extends MyObject{
         return null;
     }
 
-    public void methodPathFinder(Port from, Port to){
+    protected void methodPathFinder(Port from, Port to){
         for(TransportMethod tm : getMethodList()){
             if(tm.getOrig().equals(from)&&tm.getDest().equals(to)){
                 System.out.println("Found matching "+tm.getType()+":\n"+tm.toString()+".");
@@ -62,6 +64,12 @@ public abstract class Company extends MyObject{
             }
         }
         return null;
+    }
+
+    @Override
+    public String toString(){
+        String res = this.getName();
+        return res;
     }
 
 }

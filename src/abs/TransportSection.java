@@ -9,17 +9,17 @@ public abstract class TransportSection extends MyObject{
     private double cost;
     private TransportMethod tm;
 
-    public TransportSection(String type, String id, TransportMethod m, SeatClass sc, double c) {
+    protected TransportSection(String type, String id, TransportMethod m, SeatClass sc, double c) {
         super(type, id);
         tm = m;
         cost = c;
         s=sc;
     }
 
-    public LinkedList<Container> getSectionCapasity() {
+    protected LinkedList<Container> getSectionCapasity() {
         return this.sectionCapasity;
     }
-    public SeatClass getSeatClass() {
+     SeatClass getSeatClass() {
         return s;
     }
     public double getCost() {
@@ -28,7 +28,7 @@ public abstract class TransportSection extends MyObject{
     public void setCost(double cost) {
         this.cost = cost;
     }
-    public TransportMethod getTm() {
+    private TransportMethod getTm() {
         return tm;
     }
 
@@ -47,6 +47,6 @@ public abstract class TransportSection extends MyObject{
 
     @Override
     public String toString(){
-        return "Transport section";
+        return this.s+":"+this.cost+":";
     }
 }

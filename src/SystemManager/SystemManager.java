@@ -9,7 +9,6 @@ import abs.*;
 import local.*;
 
 public class SystemManager {
-
     private ArrayList airports = new ArrayList<Airport>();
 
     public Airport searchAirports(Airport search) {
@@ -115,7 +114,7 @@ public class SystemManager {
             Airport destination = searchAirports(dest);
             Date date = new Date(month, day, year, hour, min);
             Flight flight = new Flight("Flight "+id, origin, destination, date, id);
-            airline.addMethod(flight);
+            airline.addFlight(flight);
             System.out.println("Created flight "+id+" from "+orig+" to "+dest+".\n");
         }
     }
@@ -156,7 +155,7 @@ public class SystemManager {
         Airport to = searchAirports(dest);
         if (from!=null && to!=null){
             for(Airline al : getAirlines()){
-                al.methodPathFinder(from, to);
+                al.flightPathFinder(from, to);
             }
             System.out.println();
         }
@@ -196,6 +195,19 @@ public class SystemManager {
     }
 
     public void displaySystemDetails(PrintStream out) {
-
+        String res1 = "[";
+        for (Port p : getAirports()) {
+            res1 = res1 + p.toString();
+        }
+        res1 = res1 + "]";
+        out.print(res1);
+        String res2 = "{";
+        for (Airline al : getAirlines()) {
+            res2=res2+al.toString();
+        }
+        res2=res2+"}";
+        out.print(res2);
     }
+
+    
 }
