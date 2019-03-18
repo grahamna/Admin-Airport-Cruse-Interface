@@ -33,28 +33,13 @@ public class airSystemManager extends SystemManager {
     }
 
     public void createAirport(String name) {
-        createPort(name);
-        Airport airport = new Airport(name);
-        if(searchAirports(airport)!=null){
-            System.out.println("Airport "+name+" already exists.\n");
-        }
-        else{
-            addAirport(airport);
-            System.out.println("Created airport "+name+".\n");
-        }
+        createPort(name,"Airport");
     }
     
 
     public void createAirline(String name) {
-        createCompany(name);
-        Airline airline = new Airline(name);
-        if(searchAirlines(airline)!=null) {
-            System.out.println("Airline "+name+" already exists.\n");
-        }
-        else{
-            addAirline(airline);
-            System.out.println("Created airline "+name+".\n");
-        }
+        createCompany(name,"Airline");
+        
     }
 
     public void createFlight(String aname, String orig, String dest, int year, int month, int day, int hour, int min, String id) {

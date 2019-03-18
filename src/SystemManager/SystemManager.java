@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import abs.*;
 import local.*;
+import sea.Cruse;
+import sea.Seaport;
 
 public abstract class SystemManager {
 
@@ -46,19 +48,57 @@ public abstract class SystemManager {
         return this.myCompany;
     }
 
-    public void createPort(String name) {
-        System.out.println("Attempting to create Airport "+name+".");
+    public void createPort(String name,String type) {
+        System.out.println("Attempting to create "+type+" "+name+".");
         int charNumAirport = 3;
         if(name.length() != charNumAirport) {
-            System.out.println("Invalid input "+name+": Airport name must be 3 characters long.\n");
+            System.out.println("Invalid input "+name+": "+type+" name must be 3 characters long.\n");
+        }
+        else{
+            Port port;
+            if (this instanceof airSystemManager){
+                port = new Airport(name);
+            }
+            else if (this instanceof seaSystemManager){
+                port = new Seaport(name);
+            }
+            else {
+                throw new UnsupportedOperationException("SysMan not identified");
+            }
+            if(searchPorts(port)!=null){
+                System.out.println(type+" "+name+" already exists.\n");
+            }
+            else{
+                addPort(port);
+                System.out.println("Created "+type+" "+name+".\n");
+            }
         }
     }
 
-    public void createCompany(String name) {
-        System.out.println("Attempting to create Airline "+name+".");
+    public void createCompany(String name,String type) {
+        System.out.println("Attempting to create "+type+" "+name+".");
         int charNumAirline = 5;
         if(name.length() > charNumAirline) {
-            System.out.println("Invalid input "+name+": Airline name must be less than 6 characters long.\n");
+            System.out.println("Invalid input "+name+": "+type+" name must be less than 6 characters long.\n");
+        }
+        else {
+            Company company;
+            if (this instanceof airSystemManager){
+                company = new Airline(name);
+            }
+            else if (this instanceof seaSystemManager){
+                company = new Cruse(name);
+            }
+            else {
+                throw new UnsupportedOperationException("SysMan not identified");
+            }
+            if(searchCompany(company)!=null) {
+                System.out.println(type+" "+name+" already exists.\n");
+            }
+            else{
+                searchCompany(company);
+                System.out.println("Created "+type+" "+name+".\n");
+            }
         }
     }
 

@@ -32,34 +32,12 @@ public class seaSystemManager extends SystemManager {
     }
 
     public void createNewPort(String name) {
-        createPort(name);
-        Seaport Seaport = new Seaport(name);
-        if(searchSeaports(Seaport)!=null){
-            System.out.println("Seaport "+name+" already exists.\n");
-        }
-        else{
-            addSeaport(Seaport);
-            System.out.println("Created Seaport "+name+".\n");
-        }
+        createPort(name,"Seaport");
     }
     
 
     public void createCruse(String name) {
-        System.out.println("Attempting to create Cruse "+name+".");
-        int charNumCruse = 5;
-        if(name.length() > charNumCruse) {
-            System.out.println("Invalid input "+name+": Cruse name must be less than 6 characters long.\n");
-        }
-        else {
-            Cruse Cruse = new Cruse(name);
-            if(searchCruse(Cruse)!=null) {
-                System.out.println("Cruse "+name+" already exists.\n");
-            }
-            else{
-                addCruse(Cruse);
-                System.out.println("Created Cruse "+name+".\n");
-            }
-        }
+        createCompany(name,"Cruse");
     }
 
     public void createShip(String aname, String orig, String dest, int year, int month, int day, int hour, int min, String id) {

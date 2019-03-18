@@ -210,7 +210,6 @@ public class AdminUI {
 
     private void addPort(){
         try {
-            
             System.out.println("Enter Name for "+this.port+": ");
             String res = in.nextLine().toUpperCase();
             if (sm instanceof airSystemManager){
