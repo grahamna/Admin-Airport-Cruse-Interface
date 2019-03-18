@@ -2,6 +2,14 @@
     "configurations": [
         {
             "type": "java",
+            "name": "AS6.2",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "as6",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
             "name": "AS6",
             "request": "launch",
             "internalConsoleOptions": "openOnFirstSessionStart",

@@ -209,29 +209,39 @@ public class AdminUI {
     }
 
     private void addPort(){
-        System.out.println("Enter Name for "+this.port+": ");
-        String res = in.nextLine().toUpperCase();
-        if (sm instanceof airSystemManager){
-            ((airSystemManager)sm).createAirport(res);
-        }
-        else if(sm instanceof seaSystemManager){
-            ((seaSystemManager)sm).createNewPort(res);
-        }
-        else{
-
+        try {
+            
+            System.out.println("Enter Name for "+this.port+": ");
+            String res = in.nextLine().toUpperCase();
+            if (sm instanceof airSystemManager){
+                ((airSystemManager)sm).createAirport(res);
+            }
+            else if(sm instanceof seaSystemManager){
+                ((seaSystemManager)sm).createNewPort(res);
+            }
+            else{
+                
+            }
+        } catch (Exception e) {
+            System.out.println("Unexpected input error");
         }
     }
     private void addCompany(){
-        System.out.println("Enter Name for "+this.company+": ");
-        String res = in.nextLine().toUpperCase();
-        if (sm instanceof airSystemManager){
-            ((airSystemManager)sm).createAirline(res);
-        }
-        else if(sm instanceof seaSystemManager){
-            ((seaSystemManager)sm).createCruse(res);
-        }
-        else{
-
+        try {
+            
+            System.out.println("Enter Name for "+this.company+": ");
+            String res = in.nextLine().toUpperCase();
+            if (sm instanceof airSystemManager){
+                ((airSystemManager)sm).createAirline(res);
+            }
+            else if(sm instanceof seaSystemManager){
+                ((seaSystemManager)sm).createCruse(res);
+            }
+            else{
+                
+            }
+        } catch (Exception e) {
+            System.out.println("Unexpected input error");
         }
     }
     private void addTransportMethod(){
