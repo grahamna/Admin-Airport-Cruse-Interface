@@ -1,22 +1,65 @@
 package UI;
 
 import SystemManager.SystemManager;
+import SystemManager.airSystemManager;
+import SystemManager.seaSystemManager;
 
 import java.io.File;
 import java.util.Scanner;
 
-public class AdminUI extends UI{
+public class AdminUI {
 
     private Scanner in=new Scanner(System.in);
     private int selection=-1;
-    private SystemManager sm=new SystemManager();
+    private SystemManager sm;
+    private String type, port, company, transportMethod, transportSection, container;
+
+    public void setType() {
+        while(true){
+        try {
+                System.out.println("Select Department (1 or 2)\n1: Airport Admin\n2: Cruse Admin\n");
+                int res = Integer.parseInt(in.nextLine());
+                if (res==1){
+                    this.type = "Flight";
+                    port = "Airport";
+                    company = "Airline";
+                    transportMethod = "Flight";
+                    transportMethod = "FlightSection";
+                    container = "FlightSeat";
+                    sm = new airSystemManager();
+                }
+                if (res==2){
+                    this.type="Cruse";
+                    port = "SeaPort";
+                    company = "Cruseline";
+                    transportMethod = "Cruse";
+                    transportMethod = "CruseSection";
+                    container = "Cabin";
+                    sm = new seaSystemManager();
+                }
+            
+        } catch (Exception e) {
+            System.out.println("Unexpected input error");
+        }
+        }
+    }
 
     public void Interface() {
-        System.out.println("Welcome to the Flight Administrator Interface.\nTo begin, please select an option:\n");
+        System.out.println("Welcome to the "+this.type+" Administrator Interface.\nTo begin, please select an option:\n");
         while(selection!=0) {
-            System.out.println("1. Create an airport system from file.\n2. Change the price associated with seats.\n" +
-                    "3. Query the system for flights with available seats.\n4. Change the seat class pricing for a given airline." +
-                    "\n5. Book a seat.\n6. Book a seat with seating preference.\n7. Display system details.\n8. Store system information in a file.\n" +
+            System.out.println("\n"+
+                    "1. Create a "+this.type +" system from file.\n"+
+                    "2. Change the price associated with a "+this.container+".\n" +
+                    "3. Query the system for "+this.type+"s with available "+this.container+".\n"+
+                    "4. Change the "+this.container+" pricing for a given origin, destination and "+this.company+".\n"+
+                    "5. Book a "+this.container+".\n"+
+                    "6. Book a "+this.container+" with seating preference.\n"+
+                    "7. Display system details.\n"+
+                    "8. Store system information in a file.\n"+
+                    "9. Add a new "+this.port+".\n"+
+                    "10. Add a new "+this.company+".\n"+
+                    "11. Add a new "+this.transportMethod+" for a chosen "+this.company+".\n"+
+                    "12. Add a new "+this.transportSection+" for a chosen "+this.transportMethod+".\n"+
                     "0. Exit.\n");
             boolean badNumber;
             do{
@@ -39,6 +82,7 @@ public class AdminUI extends UI{
     private void handleSelection(int num) {
         switch(num) {
             case 0:
+                in.close();
                 break;
             case 1:
                 createAirportFromFile();
@@ -63,6 +107,18 @@ public class AdminUI extends UI{
                 break;
             case 8:
                 storeInfo();
+                break;
+            case 9:
+                addPort();
+                break;
+            case 10:
+                addCompany();
+                break;
+            case 11:
+                addTransportMethod();
+                break;
+            case 12:
+                addTransportSection();
                 break;
             default:
                 System.out.println("Invalid selection; Please try again.\n");
@@ -133,8 +189,39 @@ public class AdminUI extends UI{
     }
 
     private void storeInfo() {
-        
         sm.displaySystemDetails(FILESTREAM);
     }
 
+    private void addPort(){
+        System.out.println("Enter Name for "+this.port+": ");
+        String res = in.nextLine().toUpperCase();
+        if (sm instanceof airSystemManager){
+            ((airSystemManager)sm).createAirport(res);
+        }
+        else if(sm instanceof seaSystemManager){
+
+        }
+        else{
+
+        }
+    }
+    private void addCompany(){
+        System.out.println("Enter Name for "+this.company+": ");
+        String res = in.nextLine().toUpperCase();
+        if (sm instanceof airSystemManager){
+            ((airSystemManager)sm).createAirline(res);
+        }
+        else if(sm instanceof seaSystemManager){
+
+        }
+        else{
+
+        }
+    }
+    private void addTransportMethod(){
+        
+    }
+    private void addTransportSection(){
+
+    }
 }

@@ -2,7 +2,6 @@ package abs;
 
 import java.util.ArrayList;
 
-import air.Flight;
 
 public abstract class Company extends MyObject{
 
