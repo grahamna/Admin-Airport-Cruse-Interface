@@ -1,6 +1,6 @@
 package UI;
 
-import SystemManager.airSystemManager;
+import SystemManager.SystemManager;
 
 import java.io.File;
 import java.util.Scanner;
@@ -9,7 +9,7 @@ public class AdminUI extends UI{
 
     private Scanner in=new Scanner(System.in);
     private int selection=-1;
-    private airSystemManager sm=new airSystemManager();
+    private SystemManager sm=new SystemManager();
 
     public void Interface() {
         System.out.println("Welcome to the Flight Administrator Interface.\nTo begin, please select an option:\n");
@@ -128,11 +128,12 @@ public class AdminUI extends UI{
     }
 
     private void displayDetails() {
-        sm.displaySystemDetails();
+        sm.displaySystemDetails(System.out);
     }
 
     private void storeInfo() {
-
+        
+        sm.displaySystemDetails(FILESTREAM);
     }
 
 }
