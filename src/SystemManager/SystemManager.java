@@ -10,6 +10,42 @@ import local.*;
 
 public abstract class SystemManager {
 
+    ArrayList<Port> myPorts = new ArrayList<Port>();
+
+    public Port searchPorts(Port search) {
+        return search.searchPorts(search, myPorts);
+    }
+    public Port searchPorts(String search) {
+        return Port.searchPorts(search, myPorts);
+    }
+
+    public void addPort(Port ap) {
+        myPorts.add(ap);
+    }
+
+    protected ArrayList<Port> getPorts() {
+        return this.myPorts;
+    }
+
+
+    ArrayList<Company> myCompany = new ArrayList<Company>();
+
+    public Company searchCompany(Company search) {
+        return search.searchCompanies(search, myCompany);
+    }
+    public Company searchCompany(String search) {
+        return Company.searchCompanies(search, myCompany);
+    
+    }
+
+    public void addCompany(Company al) {
+        myCompany.add(al);
+    }
+
+    public ArrayList<Company> getCompanys() {
+        return this.myCompany;
+    }
+
     public void createPort(String name) {
         System.out.println("Attempting to create Airport "+name+".");
         int charNumAirport = 3;
@@ -26,63 +62,7 @@ public abstract class SystemManager {
         }
     }
 
-    public void findAvailablePaths(String orig, String dest) {
-        System.out.println("Attempting to find Flight from "+orig+" to "+dest+".");
-        Airport from = searchAirports(orig);
-        Airport to = searchAirports(dest);
-        if (from!=null && to!=null){
-            for(Airline al : getAirlines()){
-                al.flightPathFinder(from, to);
-            }
-            System.out.println();
-        }
-        else{
-            System.out.println("Unexpected error occured.\n");
-        }
-    }
 
-    public void bookContainer(String air, String fl, SeatClass s, int row, char col) {
-        System.out.println("Attempting to book seat "+s+" "+row+" "+col+" for Flight "+fl+".");
-        Airline airline = searchAirlines(air);
-        if(airline!=null){
-            Flight flight = airline.findFlightByID(fl);
-            if (flight!=null){
-                FlightSection fs = flight.findFS(flight, s);
-                if (fs!=null && fs.hasAvalableFlightSeats()){
-                    FlightSeat seat = fs.findFlightSeat(row, col);
-                    if (seat!=null && fs.isSeatAvailable(row, col)){
-                        seat.bookContainer();;
-                        System.out.println("Booked "+fs+" Seat "+seat+" on "+ flight+".\n");
-                    }
-                    else{
-                        System.out.println("Seat not available.\n");
-                    }
-                }
-                else{
-                    System.out.println("Flight section not available.\n");
-                }
-            }
-            else{
-                System.out.println("Flight not available.\n");
-            }
-        }
-        else{
-            System.out.println("Airline not available.\n");
-        }
-    }
 
-    public void displaySystemDetails(PrintStream out) {
-        String res1 = "[";
-        for (Port p : getAirports()) {
-            res1 = res1 + p.toString();
-        }
-        res1 = res1 + "]";
-        out.print(res1);
-        String res2 = "{";
-        for (Airline al : getAirlines()) {
-            res2=res2+al.toString();
-        }
-        res2=res2+"}";
-        out.print(res2);
-    }
+    
 }

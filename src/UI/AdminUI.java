@@ -1,8 +1,7 @@
 package UI;
 
-import SystemManager.SystemManager;
-import SystemManager.airSystemManager;
-import SystemManager.seaSystemManager;
+import SystemManager.*;
+import local.SeatClass;
 
 import java.io.File;
 import java.util.Scanner;
@@ -37,6 +36,7 @@ public class AdminUI {
                     container = "Cabin";
                     sm = new seaSystemManager();
                 }
+                break;
             
         } catch (Exception e) {
             System.out.println("Unexpected input error");
@@ -185,11 +185,27 @@ public class AdminUI {
     }
 
     private void displayDetails() {
-        sm.displaySystemDetails(System.out);
+        if (sm instanceof airSystemManager){
+            ((airSystemManager)sm).displaySystemDetails(System.out);
+        }
+        else if(sm instanceof seaSystemManager){
+            ((seaSystemManager)sm).displaySystemDetails(System.out);
+        }
+        else{
+
+        }
     }
 
     private void storeInfo() {
-        sm.displaySystemDetails(FILESTREAM);
+        if (sm instanceof airSystemManager){
+            ((airSystemManager)sm).displaySystemDetails(System.out);
+        }
+        else if(sm instanceof seaSystemManager){
+            ((seaSystemManager)sm).displaySystemDetails(System.out);
+        }
+        else{
+
+        }
     }
 
     private void addPort(){
@@ -199,7 +215,7 @@ public class AdminUI {
             ((airSystemManager)sm).createAirport(res);
         }
         else if(sm instanceof seaSystemManager){
-
+            ((seaSystemManager)sm).createNewPort(res);
         }
         else{
 
@@ -212,16 +228,85 @@ public class AdminUI {
             ((airSystemManager)sm).createAirline(res);
         }
         else if(sm instanceof seaSystemManager){
-
+            ((seaSystemManager)sm).createCruse(res);
         }
         else{
 
         }
     }
     private void addTransportMethod(){
-        
+        displayDetails();
+        try {
+            System.out.println("Enter "+this.company+" name: ");
+            String ap = in.nextLine().toUpperCase();
+            System.out.println("Enter ID for "+this.transportMethod+": ");
+            String id = in.nextLine().toUpperCase();
+            System.out.println("Origin ID: ");
+            String from = in.nextLine().toUpperCase();
+            System.out.println("Dest ID: ");
+            String to = in.nextLine().toUpperCase();
+            System.out.println("Date - Year: ");
+            int year = Integer.parseInt(in.nextLine());
+            System.out.println("Date - Month: ");
+            int month = Integer.parseInt(in.nextLine());
+            System.out.println("Date - Day: ");
+            int day = Integer.parseInt(in.nextLine());
+            System.out.println("Date - Hour: ");
+            int hour = Integer.parseInt(in.nextLine());
+            System.out.println("Date - Min: ");
+            int min = Integer.parseInt(in.nextLine());
+            if (sm instanceof airSystemManager){
+                ((airSystemManager)sm).createFlight(ap,from,to,year,month,day,hour,min,id);
+            }
+            else if(sm instanceof seaSystemManager){
+                ((seaSystemManager)sm).createShip(ap, from, to, year, month, day, hour, min, id);
+            }
+            else{
+                
+            }
+            } catch (Exception e) {
+                System.out.println("Unexpected input error");
+            }
     }
     private void addTransportSection(){
-
+        displayDetails();
+        try {
+            System.out.println("Enter "+this.company+" name: ");
+            String alName = in.nextLine().toUpperCase();
+            System.out.println("Enter ID for "+this.transportMethod+": ");
+            String flID = in.nextLine().toUpperCase();
+            System.out.println("Rows #: ");
+            int rows =Integer.parseInt(in.nextLine());
+            System.out.println("Layout char (s, m, w): ");
+            char layout = in.nextLine().toUpperCase().charAt(0);
+            System.out.println("SeatClass char (f, b, e): ");
+            char sc = in.nextLine().toUpperCase().charAt(0);
+            SeatClass s;
+            if (sc=='B'){
+                s=SeatClass.business;
+            }
+            else if(sc=='E'){
+                s=SeatClass.economy;
+            }
+            else if (sc=='F'){
+                s=SeatClass.first;
+            }
+            else{
+                throw new IllegalArgumentException("seatclass");
+            }
+            System.out.println("Cost of "+this.transportSection+": ");
+            double cost = Double.parseDouble(in.nextLine());
+            if (sm instanceof airSystemManager){
+                ((airSystemManager)sm).createSection(alName, flID, rows, layout, s, cost);
+            }
+            else if (sm instanceof seaSystemManager){
+                ((seaSystemManager)sm).createSection(alName, flID, rows, layout, s, cost);
+            }
+            else{
+                
+            }
+            } catch (Exception e) {
+                System.out.println("Unexpected input error");
+            }
     }
 }

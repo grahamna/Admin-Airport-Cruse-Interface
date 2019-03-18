@@ -3,46 +3,32 @@ package SystemManager;
 import sea.*;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 
 import abs.*;
 import local.*;
 
 public class seaSystemManager extends SystemManager {
-    private ArrayList seaports = new ArrayList<Seaport>();
-
     public Seaport searchSeaports(Seaport search) {
-        return (Seaport) search.searchPorts((Port)search, seaports);
+        return (Seaport) searchPorts(search);
     }
     public Seaport searchSeaports(String search) {
-        return (Seaport) Port.searchPorts(search, seaports);
+        return (Seaport) Port.searchPorts(search, myPorts);
     }
 
     public void addSeaport(Seaport ap) {
-        seaports.add(ap);
+        myPorts.add(ap);
     }
 
-    public ArrayList<Seaport> getSeaports() {
-        return this.seaports;
+    public Cruse searchCruse(Cruse search) {
+        return (Cruse)searchCompany(search);
     }
-
-
-    private ArrayList cruses = new ArrayList<Cruse>();
-
-    public Cruse searchCruses(Cruse search) {
-        return (Cruse) search.searchCompanies((Company)search, cruses);
-    }
-    public Cruse searchCruses(String search) {
-        return (Cruse) Company.searchCompanies(search, cruses);
+    public Cruse searchCruse(String search) {
+        return (Cruse) Company.searchCompanies(search, myCompany);
     
     }
 
     public void addCruse(Cruse al) {
-        cruses.add(al);
-    }
-
-    public ArrayList<Cruse> getCruses() {
-        return this.cruses;
+        myCompany.add(al);
     }
 
     public void createNewPort(String name) {
@@ -66,7 +52,7 @@ public class seaSystemManager extends SystemManager {
         }
         else {
             Cruse Cruse = new Cruse(name);
-            if(searchCruses(Cruse)!=null) {
+            if(searchCruse(Cruse)!=null) {
                 System.out.println("Cruse "+name+" already exists.\n");
             }
             else{
@@ -94,7 +80,7 @@ public class seaSystemManager extends SystemManager {
         else if((day<minDay || day>maxDay)||(month<minMonth || month>maxMonth) || (year<minYear || year> maxYear) || (hour>maxHour || hour<minHour) || (min>maxMin || min<minMin)) {
             System.out.println("Invalid date: "+month+"/"+day+"/"+year+".\n");
         }
-        else if(searchCruses(aname)==null) {
+        else if(searchCruse(aname)==null) {
             System.out.println("Cruse "+aname+" doesn't exist.\n");
         }
         else if(searchSeaports(orig)==null) {
@@ -104,7 +90,7 @@ public class seaSystemManager extends SystemManager {
             System.out.println("Seaport "+dest+" doesn't exist.\n");
         }
         else {
-            Cruse Cruse = searchCruses(aname);
+            Cruse Cruse = searchCruse(aname);
             Seaport origin = searchSeaports(orig);
             Seaport destination = searchSeaports(dest);
             Date date = new Date(month, day, year, hour, min);
@@ -116,7 +102,7 @@ public class seaSystemManager extends SystemManager {
 
     public void createSection(String alName, String flID, int rows, char cols, SeatClass s, double cost) {
         System.out.println("Attempting to create Section for Ship "+flID+".");
-        Cruse Cruse = searchCruses(alName);
+        Cruse Cruse = searchCruse(alName);
         int maxRowSection = 101;
         int minRowSection = 0;
         int maxColSection = 11;
@@ -149,8 +135,8 @@ public class seaSystemManager extends SystemManager {
         Seaport from = searchSeaports(orig);
         Seaport to = searchSeaports(dest);
         if (from!=null && to!=null){
-            for(Cruse al : getCruses()){
-                al.shipPathFinder(from, to);
+            for(Company al : getCompanys()){
+                ((Cruse)al).shipPathFinder(from, to);
             }
             System.out.println();
         }
@@ -161,7 +147,7 @@ public class seaSystemManager extends SystemManager {
 
     public void bookSeat(String air, String fl, SeatClass s, int row, char col) {
         System.out.println("Attempting to book seat "+s+" "+row+" "+col+" for Ship "+fl+".");
-        Cruse Cruse = searchCruses(air);
+        Cruse Cruse = searchCruse(air);
         if(Cruse!=null){
             Ship Ship = Cruse.findShipByID(fl);
             if (Ship!=null){
@@ -187,5 +173,20 @@ public class seaSystemManager extends SystemManager {
         else{
             System.out.println("Cruse not available.\n");
         }
+    }
+
+    public void displaySystemDetails(PrintStream out) {
+        String res1 = "[";
+        for (Port p : getPorts()) {
+            res1 = res1 + ((Seaport)p).toString();
+        }
+        res1 = res1 + "]";
+        out.print(res1);
+        String res2 = "{";
+        for (Company al : getCompanys()) {
+            res2 = res2 + ((Cruse)al).toString();
+        }
+        res2=res2+"}";
+        out.print(res2);
     }
 }

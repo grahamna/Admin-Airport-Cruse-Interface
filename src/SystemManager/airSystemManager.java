@@ -3,46 +3,33 @@ package SystemManager;
 import air.*;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 
 import abs.*;
 import local.*;
 
 public class airSystemManager extends SystemManager {
-    private ArrayList airports = new ArrayList<Airport>();
 
     public Airport searchAirports(Airport search) {
-        return (Airport) search.searchPorts((Port)search, airports);
+        return (Airport) searchPorts(search);
     }
     public Airport searchAirports(String search) {
-        return (Airport) Port.searchPorts(search, airports);
+        return (Airport) Port.searchPorts(search, myPorts);
     }
 
     public void addAirport(Airport ap) {
-        airports.add(ap);
+        myPorts.add(ap);
     }
-
-    public ArrayList<Airport> getAirports() {
-        return this.airports;
-    }
-
-
-    private ArrayList airlines = new ArrayList<Airline>();
 
     public Airline searchAirlines(Airline search) {
-        return (Airline) search.searchCompanies((Company)search, airlines);
+        return (Airline)searchCompany(search);
     }
     public Airline searchAirlines(String search) {
-        return (Airline) Company.searchCompanies(search, airlines);
+        return (Airline) Company.searchCompanies(search, myCompany);
     
     }
 
     public void addAirline(Airline al) {
-        airlines.add(al);
-    }
-
-    public ArrayList<Airline> getAirlines() {
-        return this.airlines;
+        myCompany.add(al);
     }
 
     public void createAirport(String name) {
@@ -59,7 +46,7 @@ public class airSystemManager extends SystemManager {
     
 
     public void createAirline(String name) {
-
+        createCompany(name);
         Airline airline = new Airline(name);
         if(searchAirlines(airline)!=null) {
             System.out.println("Airline "+name+" already exists.\n");
@@ -81,7 +68,7 @@ public class airSystemManager extends SystemManager {
         int minHour=1;
         int maxHour=12;
         int maxMin = 59;
-        int minMin = -0;
+        int minMin = 0;
         if(orig.equals(dest)) {
             System.out.println("Originating airport ("+orig+") cannot be the same as the destination airport.\n");
         }
@@ -108,15 +95,13 @@ public class airSystemManager extends SystemManager {
         }
     }
 
-    public void createSection(String alName, String flID, int rows, char cols, SeatClass s, double cost) {
+    public void createSection(String alName, String flID, int rows, char layout, SeatClass s, double cost) {
         System.out.println("Attempting to create Section for Flight "+flID+".");
         Airline airline = searchAirlines(alName);
         int maxRowSection = 101;
         int minRowSection = 0;
-        int maxColSection = 11;
-        int minColSection = 0;
-        if((rows> maxRowSection ||rows< minRowSection) || (cols> maxColSection ||cols< minColSection)) {
-            System.out.println("Invalid number of rows/columns: "+rows+" rows, "+cols+" columns.\n");
+        if(rows> maxRowSection ||rows< minRowSection) {
+            System.out.println("Invalid number of rows/columns: "+rows+" rows\n");
         }
         else if(airline==null) {
             System.out.println("Airline "+alName+" doesn't exist.\n");
@@ -127,7 +112,7 @@ public class airSystemManager extends SystemManager {
         else {
             Flight flight = (Flight) airline.findFlightByID(flID);
             if (flight.findFS(flight, s)==null){
-                FlightSection fs = new FlightSection(flight+" "+s+" class section", flight, rows, cols, s, cost);
+                FlightSection fs = new FlightSection(flight+" "+s+" class section", flight, rows, layout, s, cost);
                 flight.addFlightSection(fs, s);
                 System.out.println("Added "+fs+" to "+flight+".\n");
             }
@@ -143,8 +128,8 @@ public class airSystemManager extends SystemManager {
         Airport from = searchAirports(orig);
         Airport to = searchAirports(dest);
         if (from!=null && to!=null){
-            for(Airline al : getAirlines()){
-                al.flightPathFinder(from, to);
+            for(Company al : getCompanys()){
+                ((Airline)al).flightPathFinder(from, to);
             }
             System.out.println();
         }
@@ -181,6 +166,21 @@ public class airSystemManager extends SystemManager {
         else{
             System.out.println("Airline not available.\n");
         }
+    }
+
+    public void displaySystemDetails(PrintStream out) {
+        String res1 = "[";
+        for (Port p : getPorts()) {
+            res1 = res1 + ((Airport)p).toString();
+        }
+        res1 = res1 + "]";
+        out.print(res1);
+        String res2 = "{";
+        for (Company al : getCompanys()) {
+            res2 = res2 + ((Airline)al).toString();
+        }
+        res2=res2+"}";
+        out.print(res2);
     }
 
 }
