@@ -55,10 +55,10 @@ public abstract class SystemManager {
         }
         else{
             Port port;
-            if (this instanceof airSystemManager){
+            if (this instanceof AirSystemManager){
                 port = new Airport(name);
             }
-            else if (this instanceof seaSystemManager){
+            else if (this instanceof SeaSystemManager){
                 port = new Seaport(name);
             }
             else {
@@ -82,11 +82,11 @@ public abstract class SystemManager {
         }
         else {
             Company company;
-            if (this instanceof airSystemManager){
+            if (this instanceof AirSystemManager){
                 company = new Airline(name);
             }
-            else if (this instanceof seaSystemManager){
-                company = new Cruse(name);
+            else if (this instanceof SeaSystemManager){
+                company = new Cruise(name);
             }
             else {
                 throw new UnsupportedOperationException("SysMan not identified");
@@ -133,14 +133,14 @@ public abstract class SystemManager {
             Port origin = searchPorts(orig);
             Port destination = searchPorts(dest);
             Date date = new Date(month, day, year, hour, min);
-            if (this instanceof airSystemManager){
+            if (this instanceof AirSystemManager){
                 Flight flight = new Flight((Airport)origin, (Airport) destination, date, id);
                 ((Airline)company).addFlight(flight);
                 System.out.println("Created "+type+" "+id+" from "+orig+" to "+dest+".\n");
             }
-            else if (this instanceof seaSystemManager) {
+            else if (this instanceof SeaSystemManager) {
                 Ship ship = new Ship((Seaport)origin, (Seaport) destination, date, id);
-                ((Cruse)company).addShip(ship);
+                ((Cruise)company).addShip(ship);
                 System.out.println("Created "+type+" "+id+" from "+orig+" to "+dest+".\n");
             }
             else {
@@ -164,14 +164,14 @@ public abstract class SystemManager {
             System.out.println("TransportMethod "+flID+" doesn't exist.\n");
         }
         else {
-            if (this instanceof airSystemManager){
+            if (this instanceof AirSystemManager){
                 Flight flight = (Flight) company.findMethodByID(flID);
                 if (flight.findFS(flight, s)==null){
                     FlightSection fs = new FlightSection(flID, flight, rows, layout, s, cost);
                     flight.addFlightSection(fs, s);
                     System.out.println("Added "+fs+" to "+flight+".\n");
                 }
-                else if (this instanceof seaSystemManager){
+                else if (this instanceof SeaSystemManager){
                     Ship Ship = (Ship) company.findMethodByID(flID);
                     if (Ship.findCS(Ship, s)==null){
                         CabinSection fs = new CabinSection(flID, Ship, rows, layout, s, cost);
@@ -193,11 +193,11 @@ public abstract class SystemManager {
         Port to = searchPorts(dest);
         if (from!=null && to!=null){
             for(Company al : getCompanys()){
-                if (this instanceof airSystemManager){
+                if (this instanceof AirSystemManager){
                     ((Airline)al).flightPathFinder((Airport)from, (Airport)to);
                 }
-                else if(this instanceof seaSystemManager){
-                    ((Cruse)al).shipPathFinder((Seaport)from, (Seaport)to);
+                else if(this instanceof SeaSystemManager){
+                    ((Cruise)al).shipPathFinder((Seaport)from, (Seaport)to);
                 }
                 else{
                     throw new UnsupportedOperationException("SysMan not identified");
@@ -216,7 +216,7 @@ public abstract class SystemManager {
         if(Cruse!=null){
             TransportMethod Ship = Cruse.findMethodByID(fl);
             if (Ship!=null){
-                if (this instanceof airSystemManager){
+                if (this instanceof AirSystemManager){
                     FlightSection fs =  ((Flight)Ship).findFS((Flight)Ship, s);
                 if (fs!=null && fs.hasAvalableFlightSeats()){
                     FlightSeat seat = fs.findFlightSeat(row, col);
@@ -229,7 +229,7 @@ public abstract class SystemManager {
                     }
                 }
             }
-                else if (this instanceof seaSystemManager){
+                else if (this instanceof SeaSystemManager){
                     CabinSection cs = ((Ship)Ship).findCS((Ship) Ship, s);
                     if (cs!=null && cs.hasAvalableCabins()){
                         Cabin seat = cs.findCabin(row, col);
@@ -258,10 +258,10 @@ public abstract class SystemManager {
     public void displaySystemDetails(PrintStream out) {
         String res1 = "[";
         for (Port p : getPorts()) {
-            if (this instanceof airSystemManager){
+            if (this instanceof AirSystemManager){
                 res1 = res1 + ((Airport)p).toString();
             }
-            else if (this instanceof seaSystemManager){
+            else if (this instanceof SeaSystemManager){
 
                 res1 = res1 + ((Seaport)p).toString();
             }
@@ -270,11 +270,11 @@ public abstract class SystemManager {
         out.print(res1);
         String res2 = "{";
         for (Company al : getCompanys()) {
-            if (this instanceof airSystemManager){
+            if (this instanceof AirSystemManager){
                 res2 = res2 + ((Airline)al).toString();
             }
-            else if (this instanceof seaSystemManager){
-                res2 = res2 + ((Cruse)al).toString();
+            else if (this instanceof SeaSystemManager){
+                res2 = res2 + ((Cruise)al).toString();
             }
         }
         res2=res2+"}";
