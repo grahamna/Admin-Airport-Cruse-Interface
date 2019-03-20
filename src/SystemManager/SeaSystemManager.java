@@ -6,7 +6,7 @@ import sea.*;
 import abs.*;
 import local.*;
 
-public class SeaSystemManager extends SystemManager {
+public class seaSystemManager extends SystemManager {
     public Seaport searchSeaports(Seaport search) {
         return (Seaport) searchPorts(search);
     }
@@ -18,15 +18,15 @@ public class SeaSystemManager extends SystemManager {
         myPorts.add(ap);
     }
 
-    public Cruise searchCruise(Cruise search) {
-        return (Cruise)searchCompany(search);
+    public Cruse searchCruse(Cruse search) {
+        return (Cruse)searchCompany(search);
     }
-    public Cruise searchCruise(String search) {
-        return (Cruise) Company.searchCompanies(search, myCompany);
+    public Cruse searchCruse(String search) {
+        return (Cruse) Company.searchCompanies(search, myCompany);
     
     }
 
-    public void addCruise(Cruise al) {
+    public void addCruse(Cruse al) {
         myCompany.add(al);
     }
 
@@ -35,8 +35,8 @@ public class SeaSystemManager extends SystemManager {
     }
     
 
-    public void createCruise(String name) {
-        createCompany(name,"Cruise");
+    public void createCruse(String name) {
+        createCompany(name,"Cruse");
     }
 
     public void createShip(String aname, String orig, String dest, int year, int month, int day, int hour, int min, String id) {

@@ -6,7 +6,7 @@ import air.*;
 import abs.*;
 import local.*;
 
-public class AirSystemManager extends SystemManager {
+public class airSystemManager extends SystemManager {
 
     public Airport searchAirports(Airport search) {
         return (Airport) searchPorts(search);
