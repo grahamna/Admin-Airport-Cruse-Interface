@@ -31,7 +31,7 @@ public abstract class Company extends MyObject{
         }
     }
 
-    protected TransportMethod findMethodByID(String id) {
+    public TransportMethod findMethodByID(String id) {
         for(TransportMethod tm : getMethodList()){
             if (tm.getID().equals(id)){
                 return tm;
@@ -40,7 +40,7 @@ public abstract class Company extends MyObject{
         return null;
     }
 
-    protected void methodPathFinder(Port from, Port to){
+    public void methodPathFinder(Port from, Port to){
         for(TransportMethod tm : getMethodList()){
             if(tm.getOrig().equals(from)&&tm.getDest().equals(to)){
                 System.out.println("Found matching "+tm.getType()+":\n"+tm.toString()+".");

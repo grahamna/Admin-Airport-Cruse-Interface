@@ -198,10 +198,10 @@ public class AdminUI {
 
     private void storeInfo() {
         if (sm instanceof airSystemManager){
-            ((airSystemManager)sm).displaySystemDetails();
+            ((airSystemManager)sm).displaySystemDetails(PRINTSTREAM);
         }
         else if(sm instanceof seaSystemManager){
-            ((seaSystemManager)sm).displaySystemDetails();
+            ((seaSystemManager)sm).displaySystemDetails(PRINTSTREAM);
         }
         else{
 

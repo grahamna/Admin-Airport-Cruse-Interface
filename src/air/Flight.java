@@ -7,7 +7,7 @@ import local.*;
 public class Flight extends TransportMethod{
 
 
-    public Flight(String type, Airport orig, Airport dest, Date date, String id) {
+    public Flight(Airport orig, Airport dest, Date date, String id) {
         super("Flight", id, orig, dest, date);
         
     }

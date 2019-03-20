@@ -7,7 +7,7 @@ import local.*;
 public class Ship extends TransportMethod{
 
 
-    public Ship(String type, Seaport orig, Seaport dest, Date date, String id) {
+    public Ship(Seaport orig, Seaport dest, Date date, String id) {
         super("Ship", id, orig, dest, date);
         
     }

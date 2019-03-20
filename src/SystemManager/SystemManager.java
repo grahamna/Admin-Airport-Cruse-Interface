@@ -1,54 +1,53 @@
 package SystemManager;
 
 import air.*;
+import sea.*;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
 
 import abs.*;
 import local.*;
-import sea.Cruse;
-import sea.Seaport;
 
 public abstract class SystemManager {
 
     ArrayList<Port> myPorts = new ArrayList<Port>();
 
-    public Port searchPorts(Port search) {
+    Port searchPorts(Port search) {
         return search.searchPorts(search, myPorts);
     }
-    public Port searchPorts(String search) {
+    Port searchPorts(String search) {
         return Port.searchPorts(search, myPorts);
     }
 
-    public void addPort(Port ap) {
+    void addPort(Port ap) {
         myPorts.add(ap);
     }
 
-    protected ArrayList<Port> getPorts() {
+    ArrayList<Port> getPorts() {
         return this.myPorts;
     }
 
 
     ArrayList<Company> myCompany = new ArrayList<Company>();
 
-    public Company searchCompany(Company search) {
+    Company searchCompany(Company search) {
         return search.searchCompanies(search, myCompany);
     }
-    public Company searchCompany(String search) {
+    Company searchCompany(String search) {
         return Company.searchCompanies(search, myCompany);
     
     }
 
-    public void addCompany(Company al) {
+    void addCompany(Company al) {
         myCompany.add(al);
     }
 
-    public ArrayList<Company> getCompanys() {
+    ArrayList<Company> getCompanys() {
         return this.myCompany;
     }
 
-    public void createPort(String name,String type) {
+    void createPort(String name,String type) {
         System.out.println("Attempting to create "+type+" "+name+".");
         int charNumAirport = 3;
         if(name.length() != charNumAirport) {
@@ -75,7 +74,7 @@ public abstract class SystemManager {
         }
     }
 
-    public void createCompany(String name,String type) {
+    void createCompany(String name,String type) {
         System.out.println("Attempting to create "+type+" "+name+".");
         int charNumAirline = 5;
         if(name.length() > charNumAirline) {
@@ -102,7 +101,183 @@ public abstract class SystemManager {
         }
     }
 
+    void createTransportMethod(String aname, String orig, String dest, int year, int month, int day, int hour, int min, String id, String type) {
+        System.out.println("Attempting to create "+type+" "+id+".");
+        int minYear = 2018;
+        int maxYear = 2019;
+        int maxMonth = 12;
+        int minDay = 1;
+        int maxDay = 31;
+        int minMonth = 1;
+        int minHour=1;
+        int maxHour=12;
+        int maxMin = 59;
+        int minMin = 0;
+        if(orig.equals(dest)) {
+            System.out.println("Originating port ("+orig+") cannot be the same as the destination port.\n");
+        }
+        else if((day<minDay || day>maxDay)||(month<minMonth || month>maxMonth) || (year<minYear || year> maxYear) || (hour>maxHour || hour<minHour) || (min>maxMin || min<minMin)) {
+            System.out.println("Invalid date: "+month+"/"+day+"/"+year+".\n");
+        }
+        else if(searchCompany(aname)==null) {
+            System.out.println(type+" "+aname+" doesn't exist.\n");
+        }
+        else if(searchPorts(orig)==null) {
+            System.out.println("Port "+orig+" doesn't exist.\n");
+        }
+        else if(searchPorts(dest)==null) {
+            System.out.println("Port "+dest+" doesn't exist.\n");
+        }
+        else {
+            Company company = searchCompany(aname);
+            Port origin = searchPorts(orig);
+            Port destination = searchPorts(dest);
+            Date date = new Date(month, day, year, hour, min);
+            if (this instanceof airSystemManager){
+                Flight flight = new Flight((Airport)origin, (Airport) destination, date, id);
+                ((Airline)company).addFlight(flight);
+                System.out.println("Created "+type+" "+id+" from "+orig+" to "+dest+".\n");
+            }
+            else if (this instanceof seaSystemManager) {
+                Ship ship = new Ship((Seaport)origin, (Seaport) destination, date, id);
+                ((Cruse)company).addShip(ship);
+                System.out.println("Created "+type+" "+id+" from "+orig+" to "+dest+".\n");
+            }
+            else {
+                throw new UnsupportedOperationException("SysMan not identified");
+            }
+        }
+    }
 
+    void createSection(String alName, String flID, int rows, char layout, SeatClass s, double cost, String type) {
+        System.out.println("Attempting to create Section for Flight "+flID+".");
+        Company company = searchCompany(alName);
+        int maxRowSection = 101;
+        int minRowSection = 0;
+        if(rows> maxRowSection ||rows< minRowSection) {
+            System.out.println("Invalid number of rows/columns: "+rows+" rows\n");
+        }
+        else if(company==null) {
+            System.out.println("Company "+alName+" doesn't exist.\n");
+        }
+        else if(company.findMethodByID(flID)==null){
+            System.out.println("TransportMethod "+flID+" doesn't exist.\n");
+        }
+        else {
+            if (this instanceof airSystemManager){
+                Flight flight = (Flight) company.findMethodByID(flID);
+                if (flight.findFS(flight, s)==null){
+                    FlightSection fs = new FlightSection(flID, flight, rows, layout, s, cost);
+                    flight.addFlightSection(fs, s);
+                    System.out.println("Added "+fs+" to "+flight+".\n");
+                }
+                else if (this instanceof seaSystemManager){
+                    Ship Ship = (Ship) company.findMethodByID(flID);
+                    if (Ship.findCS(Ship, s)==null){
+                        CabinSection fs = new CabinSection(flID, Ship, rows, layout, s, cost);
+                        Ship.addCabinSection(fs, s);
+                        System.out.println("Added "+fs+" to "+Ship+".\n");
+            }
+                }
+                else {
+                    System.out.println("An identical "+type+" section was found.\n");
+                }
+            }
+        }
 
-    
+    }
+
+    public void findAvailablePath(String orig, String dest) {
+        System.out.println("Attempting to find path from "+orig+" to "+dest+".");
+        Port from = searchPorts(orig);
+        Port to = searchPorts(dest);
+        if (from!=null && to!=null){
+            for(Company al : getCompanys()){
+                if (this instanceof airSystemManager){
+                    ((Airline)al).flightPathFinder((Airport)from, (Airport)to);
+                }
+                else if(this instanceof seaSystemManager){
+                    ((Cruse)al).shipPathFinder((Seaport)from, (Seaport)to);
+                }
+                else{
+                    throw new UnsupportedOperationException("SysMan not identified");
+                }
+            }
+            System.out.println();
+        }
+        else{
+            System.out.println("Unexpected error occured.\n");
+        }
+    }
+
+    public void bookContainer(String air, String fl, SeatClass s, int row, char col) {
+        System.out.println("Attempting to book seat "+s+" "+row+" "+col+" for TransportMethod "+fl+".");
+        Company Cruse = searchCompany(air);
+        if(Cruse!=null){
+            TransportMethod Ship = Cruse.findMethodByID(fl);
+            if (Ship!=null){
+                if (this instanceof airSystemManager){
+                    FlightSection fs =  ((Flight)Ship).findFS((Flight)Ship, s);
+                if (fs!=null && fs.hasAvalableFlightSeats()){
+                    FlightSeat seat = fs.findFlightSeat(row, col);
+                    if (seat!=null && fs.isSeatAvailable(row, col)){
+                        seat.bookContainer();;
+                        System.out.println("Booked "+fs+" Seat "+seat+" on "+ Ship+".\n");
+                    }
+                    else{
+                        System.out.println("Seat not available.\n");
+                    }
+                }
+            }
+                else if (this instanceof seaSystemManager){
+                    CabinSection cs = ((Ship)Ship).findCS((Ship) Ship, s);
+                    if (cs!=null && cs.hasAvalableCabins()){
+                        Cabin seat = cs.findCabin(row, col);
+                        if (seat!=null && cs.isCabinAvailable(row, col)){
+                            seat.bookContainer();;
+                            System.out.println("Booked "+cs+" Seat "+seat+" on "+ Ship+".\n");
+                        }
+                        else{
+                            System.out.println("Seat not available.\n");
+                        }
+                    }
+                }
+                else{
+                    System.out.println("Section not available.\n");
+                }
+            }
+            else{
+                System.out.println("Transport not available.\n");
+            }
+        }
+        else{
+            System.out.println("Company not available.\n");
+        }
+    }
+
+    public void displaySystemDetails(PrintStream out) {
+        String res1 = "[";
+        for (Port p : getPorts()) {
+            if (this instanceof airSystemManager){
+                res1 = res1 + ((Airport)p).toString();
+            }
+            else if (this instanceof seaSystemManager){
+
+                res1 = res1 + ((Seaport)p).toString();
+            }
+        }
+        res1 = res1 + "]";
+        out.print(res1);
+        String res2 = "{";
+        for (Company al : getCompanys()) {
+            if (this instanceof airSystemManager){
+                res2 = res2 + ((Airline)al).toString();
+            }
+            else if (this instanceof seaSystemManager){
+                res2 = res2 + ((Cruse)al).toString();
+            }
+        }
+        res2=res2+"}";
+        out.print(res2);
+    }
 }
