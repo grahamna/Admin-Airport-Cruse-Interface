@@ -15,7 +15,7 @@ public class Main {
         int selection;
         AdminUI ui=new AdminUI();
         while(true) {
-            System.out.println("1. Airline Admin\n2.Cruise Admin\n");
+            System.out.println("1. Airline Admin\n2. Cruise Admin");
             selection=ui.numSelection(in);
             if(selection==1) {
                 return new AirlineAdmin();
@@ -24,7 +24,7 @@ public class Main {
                 return new CruiseAdmin();
             }
             else {
-                System.out.println("Invalid selection.");
+                System.out.println("Invalid selection.\n");
             }
         }
 

@@ -11,43 +11,34 @@ import local.*;
 
 public abstract class SystemManager {
 
-    ArrayList<Port> myPorts = new ArrayList<Port>();
+    private ArrayList<Port> myPorts = new ArrayList<>();
+    private ArrayList<Company> myCompanies = new ArrayList<>();
 
-    Port searchPorts(Port search) {
+    public Port searchPorts(Port search) {
         return search.searchPorts(search, myPorts);
     }
-    Port searchPorts(String search) {
+    public Port searchPorts(String search) {
         return Port.searchPorts(search, myPorts);
     }
-
-    void addPort(Port ap) {
+    public void addPort(Port ap) {
         myPorts.add(ap);
     }
-
-    ArrayList<Port> getPorts() {
-        return this.myPorts;
+    public ArrayList<Port> getPorts() {
+        return myPorts;
     }
 
-
-    ArrayList<Company> myCompany = new ArrayList<Company>();
-
-    Company searchCompany(Company search) {
-        return search.searchCompanies(search, myCompany);
+    public Company searchCompany(Company search) {
+        return search.searchCompanies(search, myCompanies);
     }
-    Company searchCompany(String search) {
-        return Company.searchCompanies(search, myCompany);
-    
+    public Company searchCompany(String search) { return Company.searchCompanies(search, myCompanies); }
+    public void addCompany(Company al) {
+        myCompanies.add(al);
     }
-
-    void addCompany(Company al) {
-        myCompany.add(al);
+    public ArrayList<Company> getCompanies() {
+        return myCompanies;
     }
 
-    ArrayList<Company> getCompanys() {
-        return this.myCompany;
-    }
-
-    void createPort(String name,String type) {
+    public void createPort(String name,String type) {
         System.out.println("Attempting to create "+type+" "+name+".");
         int charNumAirport = 3;
         if(name.length() != charNumAirport) {
@@ -74,7 +65,7 @@ public abstract class SystemManager {
         }
     }
 
-    void createCompany(String name,String type) {
+    public void createCompany(String name,String type) {
         System.out.println("Attempting to create "+type+" "+name+".");
         int charNumAirline = 5;
         if(name.length() > charNumAirline) {
@@ -95,28 +86,28 @@ public abstract class SystemManager {
                 System.out.println(type+" "+name+" already exists.\n");
             }
             else{
-                searchCompany(company);
+                addCompany(company);
                 System.out.println("Created "+type+" "+name+".\n");
             }
         }
     }
 
-    void createTransportMethod(String aname, String orig, String dest, int year, int month, int day, int hour, int min, String id, String type) {
+    public void createTransportMethod(String aname, String orig, String dest, int year, int month, int day, int hour, int min, String id, String type) {
         System.out.println("Attempting to create "+type+" "+id+".");
         int minYear = 2018;
-        int maxYear = 2019;
+        int maxYear = 2020;
         int maxMonth = 12;
         int minDay = 1;
         int maxDay = 31;
         int minMonth = 1;
         int minHour=1;
-        int maxHour=12;
+        int maxHour=24;
         int maxMin = 59;
         int minMin = 0;
         if(orig.equals(dest)) {
             System.out.println("Originating port ("+orig+") cannot be the same as the destination port.\n");
         }
-        else if((day<minDay || day>maxDay)||(month<minMonth || month>maxMonth) || (year<minYear || year> maxYear) || (hour>maxHour || hour<minHour) || (min>maxMin || min<minMin)) {
+        else if((day<minDay || day>maxDay)||(month<minMonth || month>maxMonth) || (year<minYear || year>maxYear) || (hour>maxHour || hour<minHour) || (min>maxMin || min<minMin)) {
             System.out.println("Invalid date: "+month+"/"+day+"/"+year+".\n");
         }
         else if(searchCompany(aname)==null) {
@@ -149,7 +140,7 @@ public abstract class SystemManager {
         }
     }
 
-    void createSection(String alName, String flID, int rows, char layout, SeatClass s, double cost, String type) {
+    public void createSection(String alName, String flID, int rows, char layout, SeatClass s, double cost, String type) {
         System.out.println("Attempting to create Section for Flight "+flID+".");
         Company company = searchCompany(alName);
         int maxRowSection = 101;
@@ -166,7 +157,7 @@ public abstract class SystemManager {
         else {
             if (this instanceof AirSystemManager){
                 Flight flight = (Flight) company.findMethodByID(flID);
-                if (flight.findFS(flight, s)==null){
+                if (flight.findFS(flight, s)==null && s!=null){
                     FlightSection fs = new FlightSection(flID, flight, rows, layout, s, cost);
                     flight.addFlightSection(fs, s);
                     System.out.println("Added "+fs+" to "+flight+".\n");
@@ -192,7 +183,7 @@ public abstract class SystemManager {
         Port from = searchPorts(orig);
         Port to = searchPorts(dest);
         if (from!=null && to!=null){
-            for(Company al : getCompanys()){
+            for(Company al : getCompanies()){
                 if (this instanceof AirSystemManager){
                     ((Airline)al).flightPathFinder((Airport)from, (Airport)to);
                 }
@@ -211,7 +202,7 @@ public abstract class SystemManager {
     }
 
     public void bookContainer(String air, String fl, SeatClass s, int row, char col) {
-        System.out.println("Attempting to book seat "+s+" "+row+" "+col+" for TransportMethod "+fl+".");
+        System.out.println("Attempting to book seat "+s+" "+row+" "+col+" for "+fl+".");
         Company Cruse = searchCompany(air);
         if(Cruse!=null){
             TransportMethod Ship = Cruse.findMethodByID(fl);
@@ -269,7 +260,7 @@ public abstract class SystemManager {
         res1 = res1 + "]";
         out.print(res1);
         String res2 = "{";
-        for (Company al : getCompanys()) {
+        for (Company al : getCompanies()) {
             if (this instanceof AirSystemManager){
                 res2 = res2 + ((Airline)al).toString();
             }

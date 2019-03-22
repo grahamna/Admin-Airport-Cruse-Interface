@@ -12,23 +12,23 @@ public class AirSystemManager extends SystemManager {
         return (Airport) searchPorts(search);
     }
     public Airport searchAirports(String search) {
-        return (Airport) Port.searchPorts(search, myPorts);
+        return (Airport) Port.searchPorts(search, getPorts());
     }
 
     public void addAirport(Airport ap) {
-        myPorts.add(ap);
+        getPorts().add(ap);
     }
 
     public Airline searchAirlines(Airline search) {
         return (Airline)searchCompany(search);
     }
     public Airline searchAirlines(String search) {
-        return (Airline) Company.searchCompanies(search, myCompany);
+        return (Airline) Company.searchCompanies(search, getCompanies());
     
     }
 
     public void addAirline(Airline al) {
-        myCompany.add(al);
+        getCompanies().add(al);
     }
 
     public void createAirport(String name) {
@@ -53,7 +53,7 @@ public class AirSystemManager extends SystemManager {
         findAvailablePath(orig, dest);
     }
 
-    public void bookSeat(String air, String fl, SeatClass s, int row, char col) {
+    public void bookContainer(String air, String fl, SeatClass s, int row, char col) {
         bookContainer(air, fl, s, row, col);
     }
 

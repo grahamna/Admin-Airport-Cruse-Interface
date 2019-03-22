@@ -10,14 +10,14 @@ public class FlightSection extends TransportSection {
 
     private int rows;
     private char layChar;
-    private Layout layout;
+    private AirLayout layout;
     private LinkedList<FlightSeat> list;
 
     public FlightSection(String name, Flight f, int row, char c, SeatClass sc, double cost) {
         super("FlightSection", name, f, sc, cost);
         this.rows = row;
         this.layChar = c;
-        this.layout = new Layout(this.layChar,this.rows);
+        this.layout = new AirLayout(this.layChar,this.rows);
         this.sectionCapasity = layout.getList();
     }
 
@@ -25,7 +25,7 @@ public class FlightSection extends TransportSection {
         return rows;
     }
 
-    public Layout getLayout() {
+    public AirLayout getLayout() {
         return layout;
     }
 

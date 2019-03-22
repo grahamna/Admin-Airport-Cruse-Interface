@@ -4,12 +4,12 @@ import java.util.LinkedList;
 import abs.Container;
 
 
-public class Layout{
+public class SeaLayout {
     private int row;
     private LinkedList<Container> seatList;
     private layoutType lt;
 
-    public Layout(char l, int r) {
+    public SeaLayout(char l, int r) {
         char temp = Character.toUpperCase(l);
         row = r;
         if (temp=='S'){
@@ -22,7 +22,7 @@ public class Layout{
             lt = new layout_W();
         }
         else{
-            System.out.println("Invalid Layout char");
+            System.out.println("Invalid AirLayout char");
         }
         createContainerList(row);
     }
