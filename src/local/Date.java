@@ -13,6 +13,6 @@ public class Date{
 
     @Override
     public String toString() {
-        return this.year+", "+this.month+", "+this.day+", "+this.hour+", "+this.minute;
+        return year+", "+month+", "+day+", "+hour+", "+minute;
     }
 }

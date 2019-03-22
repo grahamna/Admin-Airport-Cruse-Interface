@@ -8,15 +8,14 @@ import local.SeatClass;
 public abstract class TransportMethod extends MyObject{
     private Port dest, orig;
     private Date date;
-
-    ArrayList myList;
+    private ArrayList myList;
 
     protected TransportMethod(String type, String ID, Port origin, Port destination, Date d) {
-        super(ID, type);
+        super(type, ID);
         orig=origin;
         dest=destination;
         date=d;
-        myList = new ArrayList<TransportSection>();
+        myList=new ArrayList<TransportSection>();
     }
     
      Port getDest(){
@@ -26,14 +25,14 @@ public abstract class TransportMethod extends MyObject{
         return orig;
     }
      String getID(){
-        return this.getID();
-    }
+        return getName();
+     }
      Date getDate(){
         return date;
     }
 
     protected ArrayList<TransportSection> getSectionList(){
-        return this.myList;
+        return myList;
     }
 
     protected void addTS(TransportSection ts, SeatClass sc){
@@ -58,7 +57,7 @@ public abstract class TransportMethod extends MyObject{
 
     @Override
     public String toString(){
-        String res = this.getID()+"|"+this.date.toString()+"|"+this.orig+"|"+this.dest;
+        String res = getID()+"|"+date.toString()+"|"+orig+"|"+dest;
         return res;
     }
 }

@@ -6,28 +6,28 @@ import sea.*;
 import abs.*;
 import local.*;
 
-public class seaSystemManager extends SystemManager {
+public class SeaSystemManager extends SystemManager {
     public Seaport searchSeaports(Seaport search) {
         return (Seaport) searchPorts(search);
     }
     public Seaport searchSeaports(String search) {
-        return (Seaport) Port.searchPorts(search, myPorts);
+        return (Seaport) Port.searchPorts(search, getPorts());
     }
 
     public void addSeaport(Seaport ap) {
-        myPorts.add(ap);
+        getPorts().add(ap);
     }
 
-    public Cruse searchCruse(Cruse search) {
-        return (Cruse)searchCompany(search);
+    public Cruise searchCruise(Cruise search) {
+        return (Cruise)searchCompany(search);
     }
-    public Cruse searchCruse(String search) {
-        return (Cruse) Company.searchCompanies(search, myCompany);
+    public Cruise searchCruise(String search) {
+        return (Cruise) Company.searchCompanies(search, getCompanies());
     
     }
 
-    public void addCruse(Cruse al) {
-        myCompany.add(al);
+    public void addCruise(Cruise al) {
+        getCompanies().add(al);
     }
 
     public void createNewPort(String name) {
@@ -35,8 +35,8 @@ public class seaSystemManager extends SystemManager {
     }
     
 
-    public void createCruse(String name) {
-        createCompany(name,"Cruse");
+    public void createCruise(String name) {
+        createCompany(name,"Cruise");
     }
 
     public void createShip(String aname, String orig, String dest, int year, int month, int day, int hour, int min, String id) {
@@ -52,7 +52,7 @@ public class seaSystemManager extends SystemManager {
         findAvailablePath(orig, dest);
     }
 
-    public void bookSeat(String air, String fl, SeatClass s, int row, char col) {
+    public void bookContainer(String air, String fl, SeatClass s, int row, char col) {
         bookContainer(air, fl, s, row, col);
     }
 }

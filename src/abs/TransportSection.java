@@ -4,20 +4,23 @@ import java.util.LinkedList;
 import local.*;
 
 public abstract class TransportSection extends MyObject{
-    protected LinkedList<Container> sectionCapasity;
+    private LinkedList<Container> sectionCapacity;
     private SeatClass s;
     private double cost;
     private TransportMethod tm;
 
     protected TransportSection(String type, String id, TransportMethod m, SeatClass sc, double c) {
         super(type, id);
-        tm = m;
-        cost = c;
+        tm=m;
+        cost=c;
         s=sc;
     }
 
-    protected LinkedList<Container> getSectionCapasity() {
-        return this.sectionCapasity;
+    public LinkedList<Container> getSectionCapacity() {
+        return sectionCapacity;
+    }
+    public void setSectionCapacity(LinkedList<Container> list) {
+        sectionCapacity=list;
     }
      SeatClass getSeatClass() {
         return s;
@@ -25,15 +28,15 @@ public abstract class TransportSection extends MyObject{
     public double getCost() {
         return cost;
     }
-    public void setCost(double cost) {
-        this.cost = cost;
+    public void setCost(double c) {
+        cost = c;
     }
     private TransportMethod getTm() {
         return tm;
     }
 
     public boolean hasAvailableContainers(){
-        for(Container s : getSectionCapasity()){
+        for(Container s : getSectionCapacity()){
             if (!(s.isBooked())){
                 return true;
             }
@@ -41,12 +44,8 @@ public abstract class TransportSection extends MyObject{
         return false;
     }
 
-    public SeatClass getSC() {
-        return s;
-    }
-
     @Override
     public String toString(){
-        return this.s+":"+this.cost+":";
+        return s+":"+cost+":";
     }
 }

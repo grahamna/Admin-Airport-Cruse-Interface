@@ -10,22 +10,22 @@ public class FlightSection extends TransportSection {
 
     private int rows;
     private char layChar;
-    private Layout layout;
+    private AirLayout layout;
     private LinkedList<FlightSeat> list;
 
     public FlightSection(String name, Flight f, int row, char c, SeatClass sc, double cost) {
         super("FlightSection", name, f, sc, cost);
-        this.rows = row;
-        this.layChar = c;
-        this.layout = new Layout(this.layChar,this.rows);
-        this.sectionCapasity = layout.getList();
+        rows = row;
+        layChar = c;
+        layout = new AirLayout(layChar, rows);
+        setSectionCapacity(layout.getList());
     }
 
     public int getRows() {
         return rows;
     }
 
-    public Layout getLayout() {
+    public AirLayout getLayout() {
         return layout;
     }
 
@@ -38,7 +38,7 @@ public class FlightSection extends TransportSection {
     }
 
     public FlightSeat findFlightSeat(int row, char col) {
-        for (Container s : this.getSectionCapasity()) {
+        for (Container s : this.getSectionCapacity()) {
             FlightSeat fs = (FlightSeat) s;
             if(fs.getCol()==col && fs.getRow()==row){
                 return fs;
@@ -60,8 +60,7 @@ public class FlightSection extends TransportSection {
 
     @Override
     public String toString(){
-        String res = "["+super.toString()+this.layChar+":"+this.rows+"], ";
-        return res;
+        return "["+super.toString()+ this.layChar+":"+ this.rows+"], ";
     }
 
 }

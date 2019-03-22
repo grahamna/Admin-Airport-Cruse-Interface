@@ -1,15 +1,15 @@
-package sea;
+package air;
 
 import java.util.LinkedList;
 import abs.Container;
 
 
-public class Layout{
+public class AirLayout {
     private int row;
     private LinkedList<Container> seatList;
-    private layoutType lt;
+    private LayoutType lt;
 
-    public Layout(char l, int r) {
+    public AirLayout(char l, int r) {
         char temp = Character.toUpperCase(l);
         row = r;
         if (temp=='S'){
@@ -22,7 +22,7 @@ public class Layout{
             lt = new layout_W();
         }
         else{
-            System.out.println("Invalid Layout char");
+            System.out.println("Invalid AirLayout char");
         }
         createContainerList(row);
     }
@@ -31,58 +31,58 @@ public class Layout{
         return seatList;
     }
 
-    abstract class layoutType {
+    abstract class LayoutType {
         int col;
         boolean window=false;
         boolean aisle=false;
-        abstract Container makeCabin(int row, int col, char c);
+        abstract Container makeSeat(int row, int col, char c);
     }
 
-    private class layout_S extends layoutType{
+    private class layout_S extends LayoutType{
         
         private layout_S() {
-            this.col=2;
+            col=2;
         }
 
-        Container makeCabin(int row, int col, char c){
+        Container makeSeat(int row, int col, char c){
             if (col==0 || col==2){
                 window=true;
             }
             if (col==0 || col==1){
                 aisle=true;
             }
-            Container fs = new Cabin(row,c,aisle,window);
+            Container fs = new FlightSeat(row,c,aisle,window);
             return fs;
         }
     }    
-    private class layout_M extends layoutType {
+    private class layout_M extends LayoutType {
         private layout_M() {
             col=3;
         }
         
-        Container makeCabin(int row, int col, char c){
+        Container makeSeat(int row, int col, char c){
             if (col==0 || col==3){
                 window=true;
             }
             if (col==1 || col==2){
                 aisle=true;
             }
-            Container fs = new Cabin(row,c,aisle,window);
+            Container fs = new FlightSeat(row,c,aisle,window);
             return fs;
         }
     }
-    private class layout_W extends layoutType{
+    private class layout_W extends LayoutType{
         private layout_W() {
             col=9;
         }
-        Container makeCabin(int row, int col, char c){
+        Container makeSeat(int row, int col, char c){
             if (col==0 || col==9){
                 window=true;
             }
             if (col==2 || col==3 || col==6 || col==7){
                 aisle=true;
             }
-            Container fs = new Cabin(row,c,aisle,window);
+            Container fs = new FlightSeat(row,c,aisle,window);
             return fs;
         }
         
@@ -123,7 +123,7 @@ public class Layout{
                     c='J';
                 }
                 if (c!=' '){
-                    Container temp = lt.makeCabin(x,y,c);
+                    Container temp = lt.makeSeat(x,y,c);
                     seatList.add(temp);
                     System.out.println("Seat "+temp.toString()+" has been added.");
                 }

@@ -21,7 +21,7 @@ public class FlightSeat extends Container {
     public char getCol(){
         return col;
     }
-    public boolean isAsile() {
+    public boolean isAisle() {
         return aisle;
     }
     public boolean isWindow() {
