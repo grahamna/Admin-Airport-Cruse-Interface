@@ -11,23 +11,23 @@ public class SeaSystemManager extends SystemManager {
         return (Seaport) searchPorts(search);
     }
     public Seaport searchSeaports(String search) {
-        return (Seaport) Port.searchPorts(search, myPorts);
+        return (Seaport) Port.searchPorts(search, getPorts());
     }
 
     public void addSeaport(Seaport ap) {
-        myPorts.add(ap);
+        getPorts().add(ap);
     }
 
     public Cruise searchCruise(Cruise search) {
         return (Cruise)searchCompany(search);
     }
     public Cruise searchCruise(String search) {
-        return (Cruise) Company.searchCompanies(search, myCompany);
+        return (Cruise) Company.searchCompanies(search, getCompanies());
     
     }
 
     public void addCruise(Cruise al) {
-        myCompany.add(al);
+        getCompanies().add(al);
     }
 
     public void createNewPort(String name) {
@@ -52,7 +52,7 @@ public class SeaSystemManager extends SystemManager {
         findAvailablePath(orig, dest);
     }
 
-    public void bookSeat(String air, String fl, SeatClass s, int row, char col) {
+    public void bookContainer(String air, String fl, SeatClass s, int row, char col) {
         bookContainer(air, fl, s, row, col);
     }
 }

@@ -28,7 +28,7 @@ public abstract class TransportSection extends MyObject{
     public void setCost(double cost) {
         this.cost = cost;
     }
-    private TransportMethod getTm() {
+    public TransportMethod getTm() {
         return tm;
     }
 
@@ -43,6 +43,18 @@ public abstract class TransportSection extends MyObject{
 
     public SeatClass getSC() {
         return s;
+    }
+
+    public boolean bookAny(){
+        if (this.hasAvailableContainers()){
+            for(Container s : getSectionCapasity()){
+                if (!(s.isBooked())){
+                    s.bookContainer();
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override

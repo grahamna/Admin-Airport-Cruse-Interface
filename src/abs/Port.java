@@ -24,10 +24,5 @@ public abstract class Port extends MyObject{
         }
         return null;
     }
-
-    @Override
-    public String toString(){
-        return this.getName();
-    }
 }
 

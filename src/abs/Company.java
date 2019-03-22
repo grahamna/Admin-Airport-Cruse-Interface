@@ -23,7 +23,7 @@ public abstract class Company extends MyObject{
         }
         else {
             if (findMethodByID(tm.getID())!=null){
-                System.out.println(tm.toString()+" "+tm.getID()+" already exists.");
+                System.out.println(tm+" "+tm.getID()+" already exists.");
             }
             else{
                 methodList.add(tm);
@@ -40,12 +40,14 @@ public abstract class Company extends MyObject{
         return null;
     }
 
-    public void methodPathFinder(Port from, Port to){
+    public TransportMethod methodPathFinder(Port from, Port to){
         for(TransportMethod tm : getMethodList()){
             if(tm.getOrig().equals(from)&&tm.getDest().equals(to)){
-                System.out.println("Found matching "+tm.getType()+":\n"+tm.toString()+".");
+                System.out.println("Found matching "+tm.getType()+":\n"+tm+".");
+                return tm;
             }
         }
+        return null;
     }
 
     public Company searchCompanies(Company c, ArrayList<Company> companies) {
@@ -56,6 +58,7 @@ public abstract class Company extends MyObject{
         }
         return null;
     }
+
     public static Company searchCompanies(String c, ArrayList<Company> companies) {
         for(Company comp: companies){
             if(comp.getName().equals(c)) {
@@ -63,12 +66,6 @@ public abstract class Company extends MyObject{
             }
         }
         return null;
-    }
-
-    @Override
-    public String toString(){
-        String res = this.getName();
-        return res;
     }
 
 }
