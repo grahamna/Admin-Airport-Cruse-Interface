@@ -25,7 +25,7 @@ public abstract class TransportMethod extends MyObject{
      Port getOrig(){
         return orig;
     }
-     String getID(){
+    public String getID(){
         return getName();
     }
      Date getDate(){

@@ -28,7 +28,7 @@ public abstract class TransportSection extends MyObject{
     public void setCost(double cost) {
         this.cost = cost;
     }
-    private TransportMethod getTm() {
+    public TransportMethod getTm() {
         return tm;
     }
 

@@ -40,12 +40,14 @@ public abstract class Company extends MyObject{
         return null;
     }
 
-    public void methodPathFinder(Port from, Port to){
+    public TransportMethod methodPathFinder(Port from, Port to){
         for(TransportMethod tm : getMethodList()){
             if(tm.getOrig().equals(from)&&tm.getDest().equals(to)){
                 System.out.println("Found matching "+tm.getType()+":\n"+tm+".");
+                return tm;
             }
         }
+        return null;
     }
 
     public Company searchCompanies(Company c, ArrayList<Company> companies) {

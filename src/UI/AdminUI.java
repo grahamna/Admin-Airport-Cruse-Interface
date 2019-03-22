@@ -79,7 +79,7 @@ public class AdminUI {
                 createFromFile();
                 break;
             case 2:
-                changeSeatPrice();
+                changeSeatPrice(chooseTransportSection());
                 break;
             case 3:
                 findTrips();
@@ -334,105 +334,107 @@ public class AdminUI {
 
     }
 
-    private void changeSeatPrice() {
-
+    private void changeSeatPrice(TransportSection ts) {
+        System.out.println("SeatPrice is "+ts.getCost());
+        System.out.println("Enter new SeatPrice: ");
+        double d = Double.parseDouble(in.nextLine());
+        ts.setCost(d);
+        System.out.println("New SeatPrice is "+ts.getCost());
     }
-
-    private void findTrips() {
-
-    }
-
+    
     private void changeSeatClassPrice() {
+        TransportMethod tm = findTrips();
+        System.out.println(tm.toString());
+        System.out.println("Which seatclass' price do you wish to change? ");
+        String str = in.nextLine();
+        char c = str.toUpperCase().charAt(0);
+        SeatClass s;
+        if (c=='B'){
+            s=SeatClass.business;
+        }
+        else if(c=='E'){
+            s=SeatClass.economy;
+        }
+        else if (c=='F'){
+            s=SeatClass.first;
+        }
+        else{
+            throw new IllegalArgumentException("Error in input for Seatclass");
+        }
+        TransportSection ts = tm.findSection(tm, s);
+        if (ts!=null){
+            changeSeatPrice(ts);
+        }
+        
 
     }
+
+    private TransportMethod findTrips() {
+        System.out.println("Enter origin: ");
+        String str1 = in.nextLine().toUpperCase();
+        System.out.println("Enter destination: ");
+        String str2 = in.nextLine().toUpperCase();
+        return sm.findAvailablePath(str1, str2);
+    }
+
 
     private void bookSeat(int i) {
-        sm.displaySystemDetails(System.out);
-        System.out.println("Please select a(n) "+this.company);
-        String str = in.nextLine();
-        Company comp = sm.searchCompany(str);
-        if (comp!=null){
-            String company = str;
-            System.out.println(comp.toString());
-            System.out.println("Please select a "+this.transportMethod);
-            str = in.nextLine();
-            TransportMethod tm = comp.findMethodByID(str);
-            if (tm!=null){
-                String transMeth = str;
-                System.out.println(tm.toString());
-                System.out.println("Please select a "+this.transportSection+" via SeatClass");
-                str = in.nextLine();
+        TransportSection ts = chooseTransportSection();
+        TransportMethod tm = ts.getTm();
+        if (ts != null && ts.hasAvailableContainers()){
+            System.out.println(ts.toString());
+            if (i==0){
+                System.out.println("Select a "+this.container);
+                System.out.print(" row#: ");
+                int r = Integer.parseInt(in.nextLine());
+                System.out.print(" col letter: ");
+                String string = in.nextLine();
+                char cha = string.toUpperCase().charAt(0);
+                sm.bookContainer(company, tm.getID(), ts.getSC(), r, cha);
+            }
+            else if (i==1){
+                System.out.println("(W)indow or (A)sile: ");
+                String str = in.nextLine();
                 char c = str.toUpperCase().charAt(0);
-                SeatClass s;
-                if (c=='B'){
-                    s=SeatClass.business;
+                Container seat = null;
+                if (c=='W'){
+                    if (sm instanceof AirSystemManager){
+                        seat =((FlightSection)ts).findWindow();
+                    }
+                    else if (sm instanceof SeaSystemManager){
+                        seat = ((CabinSection)ts).findWindow();
+                    }
+                    else {
+                        System.out.println("unexpected input error");
+                    }
+
                 }
-                else if(c=='E'){
-                    s=SeatClass.economy;
+                else if (c=='A'){
+                    if (sm instanceof AirSystemManager){
+                        seat =((FlightSection)ts).findAsile();
+                        seat.bookContainer();
+                    }
+                    else if (sm instanceof SeaSystemManager){
+                        seat = ((CabinSection)ts).findAsile();
+                    }
+                    else {
+                        System.out.println("unexpected input error");
+                    }
                 }
-                else if (c=='F'){
-                    s=SeatClass.first;
+                else {
+                    System.out.println("Input not recgonised");
+                }
+                if (seat!=null){
+                    seat.bookContainer();
+                    System.out.println("Booked seat!");
                 }
                 else{
-                    throw new IllegalArgumentException("Error in addTransportSection method");
-                }
-                TransportSection ts = tm.findSection(tm, s);
-                if (ts != null && ts.hasAvailableContainers()){
-                    System.out.println(ts.toString());
-                    if (i==0){
-                        System.out.println("Select a "+this.container);
-                        System.out.print(" row#: ");
-                        int r = Integer.parseInt(in.nextLine());
-                        System.out.print(" col letter: ");
-                        String string = in.nextLine();
-                        char cha = string.toUpperCase().charAt(0);
-                        sm.bookContainer(company, transMeth, s, r, cha);
-                    }
-                    else if (i==1){
-                        System.out.println("(W)indow or (A)sile: ");
-                        str = in.nextLine();
-                        c = str.toUpperCase().charAt(0);
-                        Container seat = null;
-                        if (c=='W'){
-                            if (sm instanceof AirSystemManager){
-                                seat =((FlightSection)ts).findWindow();
-                            }
-                            else if (sm instanceof SeaSystemManager){
-                                seat = ((CabinSection)ts).findWindow();
-                            }
-                            else {
-                                System.out.println("unexpected input error");
-                            }
-
-                        }
-                        else if (c=='A'){
-                            if (sm instanceof AirSystemManager){
-                                seat =((FlightSection)ts).findAsile();
-                                seat.bookContainer();
-                            }
-                            else if (sm instanceof SeaSystemManager){
-                                seat = ((CabinSection)ts).findAsile();
-                            }
-                            else {
-                                System.out.println("unexpected input error");
-                            }
-                        }
-                        else {
-                            System.out.println("Input not recgonised");
-                        }
-                        if (seat!=null){
-                            seat.bookContainer();
-                            System.out.println("Booked seat!");
-                        }
-                        else{
-                            System.out.println("Preffered Seat Not Avalable");
-                            ts.bookAny();
-                        }
-                    }
+                    System.out.println("Preffered Seat Not Avalable");
+                    ts.bookAny();
                 }
             }
         }
-    }
+            }
 
     private void displayDetails() {
         sm.displaySystemDetails(System.out);
@@ -556,5 +558,39 @@ public class AdminUI {
             } catch (Exception e) {
                 System.out.println("Unexpected input error");
             }
+    }
+
+    public TransportSection chooseTransportSection(){
+        sm.displaySystemDetails(System.out);
+        System.out.println("Please select a(n) "+this.company);
+        String str = in.nextLine();
+        Company comp = sm.searchCompany(str);
+        if (comp!=null){
+            System.out.println(comp.toString());
+            System.out.println("Please select a "+this.transportMethod);
+            str = in.nextLine();
+            TransportMethod tm = comp.findMethodByID(str);
+            if (tm!=null){
+                System.out.println(tm.toString());
+                System.out.println("Please select a "+this.transportSection+" via SeatClass");
+                str = in.nextLine();
+                char c = str.toUpperCase().charAt(0);
+                SeatClass s;
+                if (c=='B'){
+                    s=SeatClass.business;
+                }
+                else if(c=='E'){
+                    s=SeatClass.economy;
+                }
+                else if (c=='F'){
+                    s=SeatClass.first;
+                }
+                else{
+                    throw new IllegalArgumentException("Error in addTransportSection method");
+                }
+                return tm.findSection(tm, s);
+            }
+        }
+        return null;
     }
 }

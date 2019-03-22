@@ -178,17 +178,17 @@ public abstract class SystemManager {
 
     }
 
-    public void findAvailablePath(String orig, String dest) {
+    public TransportMethod findAvailablePath(String orig, String dest) {
         System.out.println("Attempting to find path from "+orig+" to "+dest+".");
         Port from = searchPorts(orig);
         Port to = searchPorts(dest);
         if (from!=null && to!=null){
             for(Company al : getCompanies()){
                 if (this instanceof AirSystemManager){
-                    ((Airline)al).flightPathFinder((Airport)from, (Airport)to);
+                    return ((Airline)al).flightPathFinder((Airport)from, (Airport)to);
                 }
                 else if(this instanceof SeaSystemManager){
-                    ((Cruise)al).shipPathFinder((Seaport)from, (Seaport)to);
+                    return ((Cruise)al).shipPathFinder((Seaport)from, (Seaport)to);
                 }
                 else{
                     throw new UnsupportedOperationException("SysMan not identified");
@@ -199,6 +199,7 @@ public abstract class SystemManager {
         else{
             System.out.println("Unexpected error occured.\n");
         }
+        return null;
     }
 
     public void bookContainer(String air, String fl, SeatClass s, int row, char col) {

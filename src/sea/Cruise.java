@@ -22,8 +22,8 @@ public class Cruise extends Company{
 		return (Ship) findMethodByID(shipID);
     }
     
-    public void shipPathFinder(Seaport from, Seaport to) {
-        methodPathFinder(from, to);
+    public Ship shipPathFinder(Seaport from, Seaport to) {
+        return (Ship) methodPathFinder(from, to);
     }
 
     @Override
