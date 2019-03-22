@@ -1,7 +1,7 @@
 package abs;
 
 public abstract class Container extends MyObject{
-    protected boolean booked;
+    private boolean booked;
 
     public Container(String type) {
         super(type, "");

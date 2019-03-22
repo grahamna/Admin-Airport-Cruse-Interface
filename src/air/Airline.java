@@ -22,8 +22,8 @@ public class Airline extends Company{
 		return (Flight) findMethodByID(flID);
     }
     
-    public void flightPathFinder(Airport from, Airport to) {
-        methodPathFinder(from, to);
+    public Flight flightPathFinder(Airport from, Airport to) {
+        return (Flight) methodPathFinder(from, to);
     }
 
     @Override

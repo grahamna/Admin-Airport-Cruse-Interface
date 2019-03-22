@@ -10,14 +10,14 @@ public class CabinSection extends TransportSection {
 
     private int rows;
     private char layChar;
-    private Layout layout;
+    private SeaLayout layout;
     private LinkedList<Cabin> list;
 
     public CabinSection(String name, Ship f, int row, char c, SeatClass sc, double cost) {
         super("CabinSection", name, f, sc, cost);
         this.rows = row;
         this.layChar = c;
-        this.layout = new Layout(this.layChar,this.rows);
+        this.layout = new SeaLayout(this.layChar,this.rows);
         this.sectionCapasity = layout.getList();
     }
 
@@ -25,7 +25,7 @@ public class CabinSection extends TransportSection {
         return rows;
     }
 
-    public Layout getLayout() {
+    public SeaLayout getLayout() {
         return layout;
     }
 
@@ -56,6 +56,24 @@ public class CabinSection extends TransportSection {
         else{
             return (!(fs.isBooked()));
         }
+    }
+
+    public Cabin findAsile(){
+        for (Cabin fs : list) {
+            if (fs.isAsile()){
+                return fs;
+            }
+        }
+        return null;
+    }
+
+    public Cabin findWindow(){
+        for (Cabin fs : list) {
+            if (fs.isWindow()){
+                return fs;
+            }
+        }
+        return null;
     }
 
     @Override

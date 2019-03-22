@@ -12,11 +12,11 @@ public abstract class TransportMethod extends MyObject{
     ArrayList myList;
 
     protected TransportMethod(String type, String ID, Port origin, Port destination, Date d) {
-        super(ID, type);
+        super(type, ID);
         orig=origin;
         dest=destination;
         date=d;
-        myList = new ArrayList<TransportSection>();
+        myList=new ArrayList<TransportSection>();
     }
     
      Port getDest(){
@@ -25,8 +25,8 @@ public abstract class TransportMethod extends MyObject{
      Port getOrig(){
         return orig;
     }
-     String getID(){
-        return this.getID();
+    public String getID(){
+        return getName();
     }
      Date getDate(){
         return date;
@@ -47,8 +47,8 @@ public abstract class TransportMethod extends MyObject{
             myList.add(ts);
         }
     }
-    protected TransportSection findSection(TransportMethod tm, SeatClass sc) {
-        for(TransportSection ts : getSectionList()){
+    public TransportSection findSection(TransportMethod tm, SeatClass sc) {
+        for(TransportSection ts : this.getSectionList()){
             if(ts.getSeatClass().equals(sc)){
                 return ts;
             }
@@ -58,7 +58,7 @@ public abstract class TransportMethod extends MyObject{
 
     @Override
     public String toString(){
-        String res = this.getID()+"|"+this.date.toString()+"|"+this.orig+"|"+this.dest;
+        String res = getID()+"|"+date.toString()+"|"+orig+"|"+dest;
         return res;
     }
 }

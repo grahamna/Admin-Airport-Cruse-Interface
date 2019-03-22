@@ -4,21 +4,21 @@ public abstract class MyObject{
     private String name;
     private String type;
 
-    MyObject(String type, String name){
-        this.name=name;
-        this.type=type;
+    MyObject(String t, String n){
+        name=n;
+        type=t;
     }
 
     String getType() { 
-        return this.type; 
+        return type;
     }
 
     String getName() {
-        return this.name;
+        return name;
     }
 
     @Override
     public String toString() {
-        return this.name;
+        return name;
     }
 }
