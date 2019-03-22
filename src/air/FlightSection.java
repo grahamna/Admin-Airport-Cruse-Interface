@@ -58,6 +58,24 @@ public class FlightSection extends TransportSection {
         }
     }
 
+    public FlightSeat findAsile(){
+        for (FlightSeat fs : list) {
+            if (fs.isAsile()){
+                return fs;
+            }
+        }
+        return null;
+    }
+
+    public FlightSeat findWindow(){
+        for (FlightSeat fs : list) {
+            if (fs.isWindow()){
+                return fs;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString(){
         String res = "["+super.toString()+this.layChar+":"+this.rows+"], ";

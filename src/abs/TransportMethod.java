@@ -47,7 +47,7 @@ public abstract class TransportMethod extends MyObject{
             myList.add(ts);
         }
     }
-    protected TransportSection findSection(TransportMethod tm, SeatClass sc) {
+    public TransportSection findSection(TransportMethod tm, SeatClass sc) {
         for(TransportSection ts : this.getSectionList()){
             if(ts.getSeatClass().equals(sc)){
                 return ts;

@@ -58,6 +58,24 @@ public class CabinSection extends TransportSection {
         }
     }
 
+    public Cabin findAsile(){
+        for (Cabin fs : list) {
+            if (fs.isAsile()){
+                return fs;
+            }
+        }
+        return null;
+    }
+
+    public Cabin findWindow(){
+        for (Cabin fs : list) {
+            if (fs.isWindow()){
+                return fs;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString(){
         String res = "["+super.toString()+this.layChar+":"+this.rows+"], ";

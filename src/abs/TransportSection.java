@@ -45,6 +45,18 @@ public abstract class TransportSection extends MyObject{
         return s;
     }
 
+    public boolean bookAny(){
+        if (this.hasAvailableContainers()){
+            for(Container s : getSectionCapasity()){
+                if (!(s.isBooked())){
+                    s.bookContainer();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString(){
         return this.s+":"+this.cost+":";
